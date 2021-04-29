@@ -4,24 +4,14 @@ assert_options(ASSERT_BAIL, true);
 
 require_once "../core/router/Router.php";
 
+use Core\Router\Parameters;
 use Core\Router\Router;
 
 $router = new Router();
 
-$router->add('', [
-        'controller'    => 'Home',
-        'action'        => 'index'
-]);
-
-$router->add('posts', [
-        'controller'    => 'Posts',
-        'action'        => 'index'
-]);
-
-$router->add('posts/create', [
-        'controller'    => 'Posts',
-        'action'        => 'create'
-]);
+$router->add('', new Parameters('Home'));
+$router->add('posts', new Parameters('Posts'));
+$router->add('posts/create', new Parameters('Posts', 'create'));
 
 ?>
 

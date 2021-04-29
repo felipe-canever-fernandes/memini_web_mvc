@@ -2,6 +2,8 @@
 
 namespace Core\Router;
 
+require_once "Parameters.php";
+
 class Router
 {
     private array $routes;
@@ -11,9 +13,9 @@ class Router
         $this->routes = [];
     }
 
-    public function add(string $route, array $parameters): void
+    public function add(string $path, Parameters $parameters): void
     {
-        $this->routes[$route] = $parameters;
+        $this->routes[$path] = $parameters;
     }
 
     public function getRoutes(): array
