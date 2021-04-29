@@ -8,5 +8,9 @@
 </head>
 <body>
 	<h1>Hello, Memini!</h1>
+
+    <?php
+    echo '<p><strong>Query string:</strong> "' . $_SERVER['QUERY_STRING'] . '"</p>';
+    ?>
 </body>
 </html>
