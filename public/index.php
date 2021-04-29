@@ -1,8 +1,9 @@
 <?php
 
-require_once "../core/Router.php";
+require_once "../core/router/Router.php";
 
-use Core\Router;
+use Core\Router\Router;
+
 $router = new Router();
 
 $router->add('', [
