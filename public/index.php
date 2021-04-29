@@ -2,7 +2,7 @@
 
 assert_options(ASSERT_BAIL, true);
 
-require_once "../core/router/Router.php";
+require_once '../core/router/Router.php';
 
 use Core\Router\Parameters;
 use Core\Router\Router;
@@ -29,7 +29,15 @@ $router->add('posts/create', new Parameters('Posts', 'create'));
     <h2>Routes</h2>
 
     <?php
-    var_dump($router->getRoutes());
+
+    $path = $_SERVER['QUERY_STRING'];
+
+    try {
+        var_dump($router->match($path));
+    } catch (OutOfBoundsException $exception) {
+        echo $exception->getMessage();
+    }
+
     ?>
 </body>
 </html>

@@ -2,7 +2,9 @@
 
 namespace Core\Router;
 
-require_once "Parameters.php";
+use OutOfBoundsException;
+
+require_once 'Parameters.php';
 
 class Router
 {
@@ -13,13 +15,21 @@ class Router
         $this->routes = [];
     }
 
+    public function getRoutes(): array
+    {
+        return $this->routes;
+    }
+
     public function add(string $path, Parameters $parameters): void
     {
         $this->routes[$path] = $parameters;
     }
 
-    public function getRoutes(): array
+    public function match(string $path): Parameters
     {
-        return $this->routes;
+        if (!array_key_exists($path, $this->routes))
+            throw new OutOfBoundsException('Route not found.');
+
+        return $this->routes[$path];
     }
 }
