@@ -1,3 +1,27 @@
+<?php
+
+require_once "../core/Router.php";
+
+use Core\Router;
+$router = new Router();
+
+$router->add('', [
+        'controller'    => 'Home',
+        'action'        => 'index'
+]);
+
+$router->add('posts', [
+        'controller'    => 'Posts',
+        'action'        => 'index'
+]);
+
+$router->add('posts/create', [
+        'controller'    => 'Posts',
+        'action'        => 'create'
+]);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +33,10 @@
 <body>
 	<h1>Hello, Memini!</h1>
 
+    <h2>Routes</h2>
+
     <?php
-    echo '<p><strong>Query string:</strong> "' . $_SERVER['QUERY_STRING'] . '"</p>';
+    var_dump($router->getRoutes());
     ?>
 </body>
 </html>
