@@ -15,11 +15,6 @@ class Router
         $this->routes = [];
     }
 
-    public function getRoutes(): array
-    {
-        return $this->routes;
-    }
-
     public function add(string $path, Parameters $parameters): void
     {
         $this->routes[$path] = $parameters;
