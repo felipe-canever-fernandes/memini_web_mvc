@@ -9,9 +9,14 @@ use Core\Router\Router;
 
 $router = new Router();
 
-$router->add('', new Parameters('Home'));
-$router->add('posts', new Parameters('Posts'));
-$router->add('posts/create', new Parameters('Posts', 'create'));
+$router->addPath('', new Parameters('Home'));
+$router->addPath('posts', new Parameters('Posts'));
+$router->addPath('posts/create', new Parameters('Posts', 'create'));
+
+$router->addPathPattern(
+        '{controller}/{action}',
+        fn($matches) => new Parameters($matches["controller"], $matches["action"])
+);
 
 ?>
 

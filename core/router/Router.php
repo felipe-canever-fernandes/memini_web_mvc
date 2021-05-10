@@ -15,16 +15,30 @@ class Router
         $this->routes = [];
     }
 
-    public function add(string $path, Parameters $parameters): void
+    public function addPathPattern(string $pathPattern, Callable $matcher): void
     {
-        $this->routes[$path] = $parameters;
+        $pathPattern = preg_replace('/\//', '\\/', $pathPattern);
+        $pathPattern = preg_replace('/{([a-z]+)}/', '(?P<\1>[a-z-]+)', $pathPattern);
+
+        if (empty($pathPattern))
+            $pathPattern = '(?![\s\S])';
+
+        $pathPattern = "/^$pathPattern$/i";
+
+        $this->routes[$pathPattern] = $matcher;
+    }
+
+    public function addPath(string $path, Parameters $parameters): void
+    {
+        $this->addPathPattern($path, fn($matches) => $parameters);
     }
 
     public function match(string $path): Parameters
     {
-        if (!array_key_exists($path, $this->routes))
-            throw new OutOfBoundsException('Route not found.');
+        foreach ($this->routes as $pattern => $matcher)
+            if (preg_match($pattern, $path, $matches))
+                return $matcher($matches);
 
-        return $this->routes[$path];
+        throw new OutOfBoundsException('Route not found.');
     }
 }
