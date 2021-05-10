@@ -9,7 +9,7 @@ class Parameters
 
     public function __construct(string $controller, string $action = 'index')
     {
-        $this->controller = self::validateParameter($controller);
+        $this->controller = self::validateController($controller);
         $this->action = self::validateParameter($action);
     }
 
@@ -20,7 +20,7 @@ class Parameters
 
     public function setController(string $controller): void
     {
-        $this->controller = self::validateParameter($controller);
+        $this->controller = self::validateController($controller);
     }
 
     public function getAction(): string
@@ -37,5 +37,10 @@ class Parameters
     {
         assert(!empty($parameter));
         return $parameter;
+    }
+
+    private static function validateController(string $controller): string
+    {
+        return ucfirst(self::validateParameter($controller));
     }
 }
