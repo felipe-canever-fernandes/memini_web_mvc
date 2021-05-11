@@ -18,19 +18,9 @@ class Parameters
         return $this->controller;
     }
 
-    public function setController(string $controller): void
-    {
-        $this->controller = self::validateController($controller);
-    }
-
     public function getAction(): string
     {
         return $this->action;
-    }
-
-    public function setAction(string $action): void
-    {
-        $this->action = self::validateAction($action);
     }
 
     private static function validateParameter(string $parameter): string
