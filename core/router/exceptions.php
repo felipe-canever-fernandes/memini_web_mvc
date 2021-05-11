@@ -15,9 +15,9 @@ class ActionNotFoundException extends Exception
 
 class ControllerNotFoundException extends Exception
 {
-    public function __construct(string $message = "", int $code = 0, Throwable $previous = null)
+    public function __construct(string $controller, int $code = 0, Throwable $previous = null)
     {
-        parent::__construct($message, $code, $previous);
+        parent::__construct("Controller '$controller' not found.", $code, $previous);
     }
 }
 
