@@ -41,6 +41,13 @@ class Parameters
 
     private static function validateController(string $controller): string
     {
-        return ucfirst(self::validateParameter($controller));
+        return self::toPascalCase(self::validateParameter($controller));
+    }
+
+    private static function toPascalCase(string $string): string
+    {
+        $words = str_replace('-', ' ', $string);
+        $capitalized = ucwords($words);
+        return str_replace(' ', '', $capitalized);
     }
 }
