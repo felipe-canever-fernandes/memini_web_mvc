@@ -41,6 +41,6 @@ class Router
             if (preg_match($pattern, $path, $matches))
                 return $matcher($matches);
 
-        throw new RouteNotFoundException('Route not found.');
+        throw new RouteNotFoundException($path);
     }
 }
