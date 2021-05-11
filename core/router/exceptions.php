@@ -7,9 +7,9 @@ use Throwable;
 
 class ActionNotFoundException extends Exception
 {
-    public function __construct(string $message = "", int $code = 0, Throwable $previous = null)
+    public function __construct(string $action, int $code = 0, Throwable $previous = null)
     {
-        parent::__construct($message, $code, $previous);
+        parent::__construct("Action '$action' not found.", $code, $previous);
     }
 }
 
