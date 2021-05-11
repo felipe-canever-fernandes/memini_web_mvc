@@ -5,6 +5,7 @@ assert_options(ASSERT_BAIL, true);
 require_once '../core/router/Router.php';
 
 use Core\Router\Parameters;
+use Core\Router\RouteNotFoundException;
 use Core\Router\Router;
 
 $router = new Router();
@@ -39,7 +40,7 @@ $router->addPathPattern(
 
     try {
         var_dump($router->match($path));
-    } catch (OutOfBoundsException $exception) {
+    } catch (RouteNotFoundException $exception) {
         echo $exception->getMessage();
     }
 

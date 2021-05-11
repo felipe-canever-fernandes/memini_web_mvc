@@ -2,8 +2,7 @@
 
 namespace Core\Router;
 
-use OutOfBoundsException;
-
+require_once 'Exceptions.php';
 require_once 'Parameters.php';
 
 class Router
@@ -33,12 +32,15 @@ class Router
         $this->addPathPattern($path, fn($matches) => $parameters);
     }
 
+    /**
+     * @throws RouteNotFoundException
+     */
     public function match(string $path): Parameters
     {
         foreach ($this->routes as $pattern => $matcher)
             if (preg_match($pattern, $path, $matches))
                 return $matcher($matches);
 
-        throw new OutOfBoundsException('Route not found.');
+        throw new RouteNotFoundException('Route not found.');
     }
 }
