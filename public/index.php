@@ -7,10 +7,7 @@ require_once '../app/controllers/Posts.php';
 
 require_once '../core/router/Router.php';
 
-use Core\Router\ActionNotFoundException;
-use Core\Router\ControllerNotFoundException;
 use Core\Router\Parameters;
-use Core\Router\RouteNotFoundException;
 use Core\Router\Router;
 
 $router = new Router();
@@ -24,8 +21,4 @@ $router->addPathPattern(
 
 $path = $_SERVER['QUERY_STRING'];
 
-try {
-    $router->dispatch($path);
-} catch (RouteNotFoundException | ControllerNotFoundException | ActionNotFoundException $exception) {
-    echo $exception->getMessage();
-}
+$router->dispatch($path);
