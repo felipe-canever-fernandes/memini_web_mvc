@@ -3,6 +3,8 @@
 assert_options(ASSERT_BAIL, true);
 
 require_once '../app/controllers/Home.php';
+require_once '../app/controllers/Posts.php';
+
 require_once '../core/router/Router.php';
 
 use Core\Router\ActionNotFoundException;
