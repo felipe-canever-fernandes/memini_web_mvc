@@ -18,6 +18,18 @@ abstract class Controller
         if (!method_exists($this, $method))
             throw new MethodNotFoundException(self::class . $method);
 
+        if (!self::doBefore())
+            return;
+
         call_user_func_array([$this, $method], $arguments);
+
+        $this->doAfter();
     }
+
+    public function doBefore(): bool
+    {
+        return true;
+    }
+
+    public function doAfter(): void {}
 }
