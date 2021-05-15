@@ -36,7 +36,7 @@ class Parameters
 
     private static function validateAction(string $action): string
     {
-        return self::toCamelCase(self::validateParameter($action));
+        return self::toCamelCase(self::validateParameter($action)) . 'Action';
     }
 
     private static function toPascalCase(string $string): string
