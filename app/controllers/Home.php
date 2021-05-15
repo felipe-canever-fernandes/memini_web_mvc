@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class Home
 {
-    public static function indexAction(): void
+    public function indexAction(): void
     {
         echo 'Hello, world!';
     }

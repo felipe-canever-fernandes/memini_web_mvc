@@ -2,7 +2,7 @@
 
 namespace Core\Router;
 
-require_once 'Exceptions.php';
+require_once 'exceptions.php';
 require_once 'Parameters.php';
 
 class Router
@@ -46,13 +46,15 @@ class Router
         if (!class_exists($Controller))
             throw new ControllerNotFoundException($Controller);
 
+        $controller = new $Controller;
+
         $action = $parameters->getAction();
-        $callee = "$Controller::$action";
+        $callee = "{$action}Action";
 
-        if (!is_callable($callee))
-            throw new ActionNotFoundException($callee);
+        if (!is_callable([$controller, $callee]))
+            throw new ActionNotFoundException($action);
 
-        $callee();
+        $controller->$callee();
     }
 
     /**

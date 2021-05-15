@@ -4,12 +4,12 @@ namespace App\Controllers;
 
 class Posts
 {
-    public static function indexAction(): void
+    public function indexAction(): void
     {
         echo 'Hello, posts!';
     }
 
-    public static function newAction(): void
+    public function newAction(): void
     {
         echo 'New Post';
     }
