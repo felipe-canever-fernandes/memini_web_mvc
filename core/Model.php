@@ -3,6 +3,7 @@
 namespace Core;
 
 use PDO;
+use App\Configuration;
 
 abstract class Model
 {
@@ -11,12 +12,12 @@ abstract class Model
         static $connection = null;
 
         if (!$connection) {
-            $dbms = 'mysql';
-            $host = 'localhost';
-            $database = 'mvc';
+            $dbms = Configuration::DATABASE_DBMS;
+            $host = Configuration::DATABASE_HOST;
+            $database = Configuration::DATABASE_NAME;
 
-            $user = 'root';
-            $password = '';
+            $user = Configuration::DATABASE_USER;
+            $password = Configuration::DATABASE_PASSWORD;
 
             $connection = new PDO("$dbms:host=$host;dbname=$database", $user, $password);
         }
