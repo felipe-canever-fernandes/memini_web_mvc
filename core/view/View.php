@@ -2,8 +2,6 @@
 
 namespace Core\View;
 
-require_once __DIR__ . '/exceptions.php';
-
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;

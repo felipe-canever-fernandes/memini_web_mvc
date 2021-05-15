@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use \App\Models\Post;
+use App\Models\Post;
 
-use Core\Controller\Controller;
+use Core\Controller;
 use Core\View\View;
 
 class Posts extends Controller

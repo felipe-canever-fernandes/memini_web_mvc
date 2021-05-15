@@ -2,8 +2,6 @@
 
 namespace Core\Router;
 
-require_once __DIR__ . '/../Controller.php';
-
 class Router
 {
     private array $routes;

@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use \PDO;
+use PDO;
 
 abstract class Model
 {

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use \Core\Model;
+use Core\Model;
 
 class Post extends Model
 {

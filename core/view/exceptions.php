@@ -2,8 +2,6 @@
 
 namespace Core\View;
 
-require_once __DIR__ . '/../exceptions.php';
-
 use Throwable;
 use Core\NotFoundException;
 
