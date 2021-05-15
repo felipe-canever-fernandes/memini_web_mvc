@@ -14,8 +14,6 @@ use Core\Router\Router;
 $router = new Router();
 
 $router->addPath('', new Parameters('Home'));
-$router->addPath('posts', new Parameters('Posts'));
-$router->addPath('posts/create', new Parameters('Posts', 'create'));
 
 $router->addPathPattern(
         '{controller}/{action}',
