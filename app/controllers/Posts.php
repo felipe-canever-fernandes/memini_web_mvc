@@ -17,6 +17,6 @@ class Posts extends Controller
 
     public function newAction(): void
     {
-        echo 'New Post';
+        View::render('posts/new.twig');
     }
 }
