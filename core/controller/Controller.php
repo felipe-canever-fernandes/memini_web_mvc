@@ -16,11 +16,11 @@ abstract class Controller
     /**
      * @throws MethodNotFoundException
      */
-    public function __call($name, $arguments): void
+    public final function __call($name, $arguments): void
     {
         $method =  self::actionToMethod($name);
 
-        if (!method_exists($this, $method))
+        if (!$this->actionExists($name))
             throw new MethodNotFoundException(self::class . $method);
 
         if (!self::doBefore())
@@ -29,6 +29,11 @@ abstract class Controller
         call_user_func_array([$this, $method], $arguments);
 
         $this->doAfter();
+    }
+
+    public final function actionExists(string $action): bool
+    {
+        return method_exists($this, self::actionToMethod($action));
     }
 
     public function doBefore(): bool

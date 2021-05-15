@@ -6,8 +6,6 @@ require_once __DIR__ . '/../controller/Controller.php';
 require_once 'exceptions.php';
 require_once 'Parameters.php';
 
-use Core\Controller\Controller;
-
 class Router
 {
     private array $routes;
@@ -53,7 +51,7 @@ class Router
 
         $action = $parameters->getAction();
 
-        if (!is_callable([$Controller, Controller::actionToMethod($action)]))
+        if (!$controller->actionExists($action))
             throw new ActionNotFoundException($Controller, $action);
 
         $controller->$action();
