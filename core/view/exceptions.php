@@ -2,13 +2,15 @@
 
 namespace Core\View;
 
-use Exception;
-use Throwable;
+require_once __DIR__ . '/../exceptions.php';
 
-class ViewNotFoundException extends Exception
+use Throwable;
+use Core\NotFoundException;
+
+class ViewNotFoundException extends NotFoundException
 {
     public function __construct(string $view, int $code = 0, Throwable $previous = null)
     {
-        parent::__construct("View '$view' not found.", $code, $previous);
+        parent::__construct("view", $view, $code, $previous);
     }
 }

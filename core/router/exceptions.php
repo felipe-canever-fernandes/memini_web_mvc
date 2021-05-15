@@ -2,29 +2,31 @@
 
 namespace Core\Router;
 
-use Exception;
-use Throwable;
+require_once __DIR__ . '/../exceptions.php';
 
-class ActionNotFoundException extends Exception
+use Throwable;
+use Core\NotFoundException;
+
+class ActionNotFoundException extends NotFoundException
 {
-    public function __construct(string $controller, string $action, int $code = 0, Throwable $previous = null)
+    public function __construct(string $action, int $code = 0, Throwable $previous = null)
     {
-        parent::__construct("Action '$action' not found in controller '$controller'.", $code, $previous);
+        parent::__construct("action", $action, $code, $previous);
     }
 }
 
-class ControllerNotFoundException extends Exception
+class ControllerNotFoundException extends NotFoundException
 {
     public function __construct(string $controller, int $code = 0, Throwable $previous = null)
     {
-        parent::__construct("Controller '$controller' not found.", $code, $previous);
+        parent::__construct("controller", $controller, $code, $previous);
     }
 }
 
-class RouteNotFoundException extends Exception
+class RouteNotFoundException extends NotFoundException
 {
     public function __construct(string $path, int $code = 0, Throwable $previous = null)
     {
-        parent::__construct("Route '$path' not found.", $code, $previous);
+        parent::__construct("route", $path, $code, $previous);
     }
 }

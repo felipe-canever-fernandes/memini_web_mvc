@@ -52,7 +52,7 @@ class Router
         $action = $parameters->getAction();
 
         if (!$controller->actionExists($action))
-            throw new ActionNotFoundException($Controller, $action);
+            throw new ActionNotFoundException("$Controller::$action");
 
         $controller->$action();
     }
