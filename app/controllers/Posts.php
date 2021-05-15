@@ -2,7 +2,11 @@
 
 namespace App\Controllers;
 
-class Posts
+require_once __DIR__ . '/../../core/controller/Controller.php';
+
+use Core\Controller\Controller;
+
+class Posts extends Controller
 {
     public function indexAction(): void
     {

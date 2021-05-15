@@ -2,8 +2,11 @@
 
 namespace Core\Router;
 
+require_once __DIR__ . '/../controller/Controller.php';
 require_once 'exceptions.php';
 require_once 'Parameters.php';
+
+use Core\Controller\Controller;
 
 class Router
 {
@@ -49,12 +52,11 @@ class Router
         $controller = new $Controller;
 
         $action = $parameters->getAction();
-        $callee = "{$action}Action";
 
-        if (!is_callable([$controller, $callee]))
+        if (!is_callable([$Controller, $action . Controller::ACTION_SUFFIX]))
             throw new ActionNotFoundException($action);
 
-        $controller->$callee();
+        $controller->$action();
     }
 
     /**
