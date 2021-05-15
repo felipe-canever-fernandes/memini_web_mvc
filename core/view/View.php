@@ -4,21 +4,28 @@ namespace Core\View;
 
 require_once __DIR__ . '/exceptions.php';
 
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Loader\FilesystemLoader;
+
 class View
 {
+    private static ?Environment $twig = null;
+
     /**
      * @throws ViewNotFoundException
      */
     public static function render(string $view, array $arguments = []): void
     {
-        $file = __DIR__ . "/../../app/views/$view";
+        if (!self::$twig) {
+            $loader = new FilesystemLoader(__DIR__ . '/../../app/views');
+            self::$twig = new Environment($loader);
+        }
 
-        if (!is_readable($file))
+        try {
+            echo self::$twig->render($view, $arguments);
+        } catch (LoaderError $error) {
             throw new ViewNotFoundException($view);
-
-        extract($arguments, EXTR_SKIP);
-
-        /** @noinspection PhpIncludeInspection */
-        require $file;
+        }
     }
 }

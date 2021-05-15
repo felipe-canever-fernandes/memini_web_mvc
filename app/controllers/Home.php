@@ -12,6 +12,6 @@ class Home extends Controller
 {
     public function indexAction(): void
     {
-        View::render('home/index.php', ['name' => 'Felipe']);
+        View::render('home/index.twig', ['name' => 'Felipe']);
     }
 }

@@ -2,6 +2,8 @@
 
 assert_options(ASSERT_BAIL, true);
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 require_once '../app/controllers/Home.php';
 require_once '../app/controllers/Posts.php';
 
