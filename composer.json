@@ -9,5 +9,11 @@
             "name": "Felipe Canever Fernandes",
             "email": "felipe.canever.fernandes@outlook.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core/",
+            "App\\": "app/"
+        }
+    }
 }
