@@ -6,14 +6,19 @@ require_once 'exceptions.php';
 
 abstract class Controller
 {
-    public const ACTION_SUFFIX = "Action";
+    private const ACTION_SUFFIX = "Action";
+
+    public final static function actionToMethod(string $action): string
+    {
+        return $action . self::ACTION_SUFFIX;
+    }
 
     /**
      * @throws MethodNotFoundException
      */
     public function __call($name, $arguments): void
     {
-        $method =  $name . self::ACTION_SUFFIX;
+        $method =  self::actionToMethod($name);
 
         if (!method_exists($this, $method))
             throw new MethodNotFoundException(self::class . $method);
