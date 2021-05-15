@@ -47,11 +47,12 @@ class Router
             throw new ControllerNotFoundException($Controller);
 
         $action = $parameters->getAction();
+        $callee = "$Controller::$action";
 
-        if (!is_callable($Controller, $action))
-            throw new ActionNotFoundException($action);
+        if (!is_callable($callee))
+            throw new ActionNotFoundException($callee);
 
-        $Controller::$action();
+        $callee();
     }
 
     /**
