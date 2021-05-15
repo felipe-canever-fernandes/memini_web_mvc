@@ -54,7 +54,7 @@ class Router
         $action = $parameters->getAction();
 
         if (!is_callable([$Controller, $action . Controller::ACTION_SUFFIX]))
-            throw new ActionNotFoundException($action);
+            throw new ActionNotFoundException($Controller, $action);
 
         $controller->$action();
     }
