@@ -11,7 +11,7 @@ abstract class Controller
         return $action . self::ACTION_SUFFIX;
     }
 
-    public final function __call($name, $arguments): void
+    public final function __call(string $name, array $arguments): void
     {
         $method =  self::actionToMethod($name);
 
