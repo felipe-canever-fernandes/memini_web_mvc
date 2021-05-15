@@ -2,8 +2,6 @@
 
 namespace Core\Controller;
 
-require_once 'exceptions.php';
-
 abstract class Controller
 {
     private const ACTION_SUFFIX = "Action";
@@ -13,15 +11,9 @@ abstract class Controller
         return $action . self::ACTION_SUFFIX;
     }
 
-    /**
-     * @throws MethodNotFoundException
-     */
     public final function __call($name, $arguments): void
     {
         $method =  self::actionToMethod($name);
-
-        if (!$this->actionExists($name))
-            throw new MethodNotFoundException(self::class . $method);
 
         if (!self::doBefore())
             return;

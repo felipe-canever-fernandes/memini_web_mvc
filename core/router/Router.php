@@ -2,7 +2,7 @@
 
 namespace Core\Router;
 
-require_once __DIR__ . '/../controller/Controller.php';
+require_once __DIR__ . '/../Controller.php';
 require_once 'exceptions.php';
 require_once 'Parameters.php';
 
