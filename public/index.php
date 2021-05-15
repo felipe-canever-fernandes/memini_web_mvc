@@ -4,6 +4,8 @@ assert_options(ASSERT_BAIL, true);
 
 require_once '../core/router/Router.php';
 
+use Core\Router\ActionNotFoundException;
+use Core\Router\ControllerNotFoundException;
 use Core\Router\Parameters;
 use Core\Router\RouteNotFoundException;
 use Core\Router\Router;
@@ -32,15 +34,13 @@ $router->addPathPattern(
 <body>
 	<h1>Hello, Memini!</h1>
 
-    <h2>Routes</h2>
-
     <?php
 
     $path = $_SERVER['QUERY_STRING'];
 
     try {
-        var_dump($router->match($path));
-    } catch (RouteNotFoundException $exception) {
+        $router->dispatch($path);
+    } catch (RouteNotFoundException | ControllerNotFoundException | ActionNotFoundException $exception) {
         echo $exception->getMessage();
     }
 

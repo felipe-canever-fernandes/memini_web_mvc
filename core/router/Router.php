@@ -34,8 +34,30 @@ class Router
 
     /**
      * @throws RouteNotFoundException
+     * @throws ControllerNotFoundException
+     * @throws ActionNotFoundException
      */
-    public function match(string $path): Parameters
+    public function dispatch(string $path): void
+    {
+        $parameters = $this->match($path);
+
+        $Controller = "\\App\\Controllers\\{$parameters->getController()}";
+
+        if (!class_exists($Controller))
+            throw new ControllerNotFoundException($Controller);
+
+        $action = $parameters->getAction();
+
+        if (!is_callable($Controller, $action))
+            throw new ActionNotFoundException($action);
+
+        $Controller::$action();
+    }
+
+    /**
+     * @throws RouteNotFoundException
+     */
+    private function match(string $path): Parameters
     {
         foreach ($this->routes as $pattern => $matcher)
             if (preg_match($pattern, $path, $matches))
