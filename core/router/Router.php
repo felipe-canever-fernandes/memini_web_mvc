@@ -55,6 +55,12 @@ class Router
         $controller->$action();
     }
 
+    public static function redirect(string $path): void
+    {
+        header('Location: http://' . $_SERVER['HTTP_HOST'] . $path, true, 303);
+        exit;
+    }
+
     /**
      * @throws RouteNotFoundException
      */
