@@ -125,7 +125,7 @@ class User extends Model
         return $errors;
     }
 
-    public static function selectByEmail($email)
+    public static function findByEmail($email)
     {
         $connection = self::getConnection();
 
@@ -157,13 +157,13 @@ class User extends Model
 
     private static function emailExists(string $email): bool
     {
-        return self::selectByEmail($email) !== false;
+        return self::findByEmail($email) !== false;
     }
 
     public static function authenticate(string $email, string $password)
     {
         $errors = [];
-        $user = self::selectByEmail($email);
+        $user = self::findByEmail($email);
 
         if (!$user) {
             $errors['email'][] = 'This email doesn\'t seem to belong to any user.';
