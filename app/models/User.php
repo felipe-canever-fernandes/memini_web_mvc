@@ -9,14 +9,14 @@ class User extends Model
     private int $id;
     private string $name;
     private string $email;
-    private string $hashedPassword;
+    private string $password;
 
-    public function __construct(string $name, string $email, string $hashedPassword, int $id = 0)
+    public function __construct(string $name, string $email, string $password, int $id = 0)
     {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
-        $this->hashedPassword = $hashedPassword;
+        $this->password = $password;
     }
 
     public function getId(): int
@@ -49,14 +49,14 @@ class User extends Model
         $this->email = $email;
     }
 
-    public function getHashedPassword(): string
+    public function getPassword(): string
     {
-        return $this->hashedPassword;
+        return $this->password;
     }
 
-    public function setHashedPassword(string $hashedPassword): void
+    public function setPassword(string $password): void
     {
-        $this->hashedPassword = $hashedPassword;
+        $this->password = $password;
     }
 
     public static function insert(User $user): bool
@@ -72,7 +72,7 @@ class User extends Model
 
         $statement->bindValue(':name',              $user->getName());
         $statement->bindValue(':email',             $user->getEmail());
-        $statement->bindValue(':hashedPassword',    $user->getHashedPassword());
+        $statement->bindValue(':hashedPassword',    password_hash($user->getPassword(), PASSWORD_DEFAULT));
 
         return $statement->execute();
     }

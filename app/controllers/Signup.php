@@ -15,12 +15,7 @@ class Signup extends Controller
 
     public function insertAction(): void
     {
-        $user = new User(
-            $_POST['name'],
-            $_POST['email'],
-            password_hash($_POST['password'], PASSWORD_DEFAULT)
-        );
-
+        $user = new User($_POST['name'], $_POST['email'], $_POST['password']);
         User::insert($user);
     }
 }
