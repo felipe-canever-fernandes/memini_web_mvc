@@ -13,7 +13,7 @@
                     class="form-control {% if errors.email is defined %}is-invalid{% endif %}"
                     id="email"
                     name="email"
-                    value="{{ user.getEmail }}"
+                    value="{{ email }}"
                     required
                     aria-describedby="emailValidation"
             >
@@ -27,15 +27,21 @@
             <input
                     type="password"
                     placeholder="Password"
-                    class="form-control"
+                    class="form-control {% if errors.password is defined %}is-invalid{% endif %}"
                     id="password"
                     name="password"
-                    value="{{ user.getPassword }}"
+                    value="{{ password }}"
                     required
+                    aria-describedby="passwordValidation"
             >
             <a href="#" class="btn btn-outline-secondary" onclick="toggleVisibility()">
                 <i class="bi-eye-slash" id="eye"></i>
             </a>
+            <div id="passwordValidation" class="invalid-feedback">
+                {% for message in errors.password %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
         </div>
         <button type="submit" class="btn btn-primary">Sign In</button>
     </form>

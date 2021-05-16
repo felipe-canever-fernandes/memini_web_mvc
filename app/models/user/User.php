@@ -159,4 +159,23 @@ class User extends Model
     {
         return self::selectByEmail($email) !== false;
     }
+
+    public static function authenticate(string $email, string $password)
+    {
+        $errors = [];
+        $user = self::selectByEmail($email);
+
+        if (!$user) {
+            $errors['email'][] = 'This email doesn\'t seem to belong to any user.';
+            return $errors;
+        }
+
+        if (!password_verify($password, $user->getHashedPassword())) {
+            $errors['password'][] = 'The password you entered is incorrect.';
+            return $errors;
+        }
+
+        $user->setPassword($password);
+        return $user;
+    }
 }
