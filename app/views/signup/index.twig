@@ -12,7 +12,18 @@
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email">
+            <input
+                    type="email"
+                    class="form-control {% if errors.email is defined %}is-invalid{% endif %}"
+                    id="email"
+                    name="email"
+                    aria-describedby="emailValidation"
+            >
+            <div id="emailValidation" class="invalid-feedback">
+                {% for message in errors.email %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>

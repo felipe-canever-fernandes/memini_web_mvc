@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Models\ValidationErrorException;
 use Core\Controller;
 use Core\View\View;
 
@@ -16,6 +17,11 @@ class Signup extends Controller
     public function insertAction(): void
     {
         $user = new User($_POST['name'], $_POST['email'], $_POST['password']);
-        User::insert($user);
+
+        try {
+            User::insert($user);
+        } catch (ValidationErrorException $exception) {
+            View::render('signup/index.twig', ['errors' => $exception->getErrors()]);
+        }
     }
 }
