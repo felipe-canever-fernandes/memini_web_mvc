@@ -16,6 +16,11 @@ $router->addPathPattern(
         fn($matches) => new Parameters($matches["controller"], $matches["action"])
 );
 
+$router->addPathPattern(
+    '{controller}',
+    fn($matches) => new Parameters($matches["controller"])
+);
+
 $path = $_SERVER['QUERY_STRING'];
 
 $router->dispatch($path);
