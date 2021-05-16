@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\User;
 use App\Models\ValidationErrorException;
 use Core\Controller;
+use Core\Router\Router;
 use Core\View\View;
 
 class Signup extends Controller
@@ -20,12 +21,17 @@ class Signup extends Controller
 
         try {
             User::insert($user);
-            View::render('signup/success.twig');
+            Router::redirect('/signup/success');
         } catch (ValidationErrorException $exception) {
             View::render('signup/index.twig', [
                 'user' => $user,
                 'errors' => $exception->getErrors()
             ]);
         }
+    }
+
+    public function successAction(): void
+    {
+        View::render('signup/success.twig');
     }
 }
