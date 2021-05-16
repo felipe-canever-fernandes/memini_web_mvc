@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\User;
 
-require_once __DIR__ . '/exceptions.php';
+require_once __DIR__ . '/../exceptions.php';
 
+use App\Models\ValidationErrorException;
 use Core\Model;
 
 class User extends Model
@@ -12,13 +13,23 @@ class User extends Model
     private string $name;
     private string $email;
     private string $password;
+    private string $hashedPassword;
 
-    public function __construct(string $name, string $email, string $password, int $id = 0)
+    public function __construct(
+        string $name, string $email, string $password, bool $isPasswordHashed = false, int $id = 0
+    )
     {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
-        $this->password = $password;
+
+        if (!$isPasswordHashed) {
+            $this->password = $password;
+            $this->hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        } else {
+            $this->password = '';
+            $this->hashedPassword = $password;
+        }
     }
 
     public function getId(): int
@@ -51,14 +62,31 @@ class User extends Model
         $this->email = $email;
     }
 
+    /**
+     * @throws PasswordNotSetException
+     */
     public function getPassword(): string
     {
+        if (empty($this->password))
+            throw new PasswordNotSetException();
+
         return $this->password;
     }
 
     public function setPassword(string $password): void
     {
         $this->password = $password;
+        $this->setHashedPassword(password_hash($password, PASSWORD_DEFAULT));
+    }
+
+    public function getHashedPassword()
+    {
+        return $this->hashedPassword;
+    }
+
+    public function setHashedPassword($hashedPassword): void
+    {
+        $this->hashedPassword = $hashedPassword;
     }
 
     /**
@@ -82,7 +110,7 @@ class User extends Model
 
         $statement->bindValue(':name',              $user->getName());
         $statement->bindValue(':email',             $user->getEmail());
-        $statement->bindValue(':hashedPassword',    password_hash($user->getPassword(), PASSWORD_DEFAULT));
+        $statement->bindValue(':hashedPassword',    $user->getHashedPassword());
 
         return $statement->execute();
     }

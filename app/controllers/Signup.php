@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
+use App\Models\User\User;
 use App\Models\ValidationErrorException;
 use Core\Controller;
 use Core\Router\Router;
@@ -17,7 +17,7 @@ class Signup extends Controller
 
     public function insertAction(): void
     {
-        $user = new User($_POST['name'], $_POST['email'], $_POST['password']);
+        $user = new User($_POST['name'], $_POST['email'], $_POST['password'], false);
 
         try {
             User::insert($user);
