@@ -6,14 +6,9 @@ require_once __DIR__ . '/exceptions.php';
 
 class Router
 {
-    private array $routes;
+    private static array $routes = [];
 
-    public function __construct()
-    {
-        $this->routes = [];
-    }
-
-    public function addPathPattern(string $pathPattern, Callable $matcher): void
+    public static function addPathPattern(string $pathPattern, Callable $matcher): void
     {
         $pathPattern = preg_replace('/\//', '\\/', $pathPattern);
         $pathPattern = preg_replace('/{([a-z]+)}/', '(?P<\1>[a-z-]+)', $pathPattern);
@@ -23,12 +18,12 @@ class Router
 
         $pathPattern = "/^$pathPattern$/i";
 
-        $this->routes[$pathPattern] = $matcher;
+        self::$routes[$pathPattern] = $matcher;
     }
 
-    public function addPath(string $path, Parameters $parameters): void
+    public static function addPath(string $path, Parameters $parameters): void
     {
-        $this->addPathPattern($path, fn($matches) => $parameters);
+        self::addPathPattern($path, fn($matches) => $parameters);
     }
 
     /**
@@ -36,9 +31,9 @@ class Router
      * @throws ControllerNotFoundException
      * @throws ActionNotFoundException
      */
-    public function dispatch(string $path): void
+    public static function dispatch(string $path): void
     {
-        $parameters = $this->match($path);
+        $parameters = self::match($path);
 
         $Controller = "\\App\\Controllers\\{$parameters->getController()}";
 
@@ -64,9 +59,9 @@ class Router
     /**
      * @throws RouteNotFoundException
      */
-    private function match(string $path): Parameters
+    private static function match(string $path): Parameters
     {
-        foreach ($this->routes as $pattern => $matcher)
+        foreach (self::$routes as $pattern => $matcher)
             if (preg_match($pattern, $path, $matches))
                 return $matcher($matches);
 

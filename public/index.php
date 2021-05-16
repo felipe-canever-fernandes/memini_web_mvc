@@ -7,20 +7,18 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Core\Router\Parameters;
 use Core\Router\Router;
 
-$router = new Router();
+Router::addPath('', new Parameters('Home'));
 
-$router->addPath('', new Parameters('Home'));
-
-$router->addPathPattern(
+Router::addPathPattern(
         '{controller}/{action}',
         fn($matches) => new Parameters($matches["controller"], $matches["action"])
 );
 
-$router->addPathPattern(
+Router::addPathPattern(
     '{controller}',
     fn($matches) => new Parameters($matches["controller"])
 );
 
 $path = $_SERVER['QUERY_STRING'];
 
-$router->dispatch($path);
+Router::dispatch($path);
