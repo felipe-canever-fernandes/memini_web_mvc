@@ -8,7 +8,7 @@
     <form method="post" action="/signup/insert">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ user.getName }}">
+            <input type="text" class="form-control" id="name" name="name" value="{{ user.getName }}" required>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
@@ -18,6 +18,7 @@
                     id="email"
                     name="email"
                     value="{{ user.getEmail }}"
+                    required
                     aria-describedby="emailValidation"
             >
             <div id="emailValidation" class="invalid-feedback">
@@ -28,7 +29,14 @@
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" value="{{ user.getPassword }}">
+            <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    value="{{ user.getPassword }}"
+                    required
+            >
         </div>
         <button type="submit" class="btn btn-primary">Sign Up</button>
     </form>
