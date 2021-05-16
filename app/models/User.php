@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+require_once __DIR__ . '/exceptions.php';
+
 use Core\Model;
 
 class User extends Model
@@ -59,9 +61,17 @@ class User extends Model
         $this->password = $password;
     }
 
+    /**
+     * @throws ValidationErrorException
+     */
     public static function insert(User $user): bool
     {
         $connection = self::getConnection();
+
+        $errors = self::validate($user);
+
+        if (!empty($errors))
+            throw new ValidationErrorException(self::class, $errors);
 
         $statement = $connection->prepare(
             '
@@ -75,5 +85,35 @@ class User extends Model
         $statement->bindValue(':hashedPassword',    password_hash($user->getPassword(), PASSWORD_DEFAULT));
 
         return $statement->execute();
+    }
+
+    public static function validate(User $user): array
+    {
+        $errors = [];
+
+        if (self::emailExists($user->getEmail()))
+            $errors['email'][] = 'This email has already been taken.';
+
+        return $errors;
+    }
+
+    private static function emailExists(string $email): bool
+    {
+        $connection = self::getConnection();
+
+        $statement = $connection->prepare(
+            '
+            SELECT *
+            FROM `user`
+            WHERE `email` = :email
+            LIMIT 1;
+            '
+        );
+
+        $statement->bindValue(':email', $email);
+
+        $statement->execute();
+
+        return $statement->fetch() !== false;
     }
 }
