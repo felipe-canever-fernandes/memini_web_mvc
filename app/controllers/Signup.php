@@ -22,7 +22,10 @@ class Signup extends Controller
             User::insert($user);
             View::render('signup/success.twig');
         } catch (ValidationErrorException $exception) {
-            View::render('signup/index.twig', ['errors' => $exception->getErrors()]);
+            View::render('signup/index.twig', [
+                'user' => $user,
+                'errors' => $exception->getErrors()
+            ]);
         }
     }
 }
