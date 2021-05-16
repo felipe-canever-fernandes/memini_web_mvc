@@ -1,11 +1,12 @@
 <?php
 
-assert_options(ASSERT_BAIL, true);
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Core\Router\Parameters;
 use Core\Router\Router;
+
+assert_options(ASSERT_BAIL, true);
+session_start();
 
 Router::addPath('', new Parameters('Home'));
 
