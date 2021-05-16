@@ -43,7 +43,14 @@
                     value="{{ user.getPassword }}"
                     required
             >
+            <a href="#" class="btn btn-outline-secondary" onclick="toggleVisibility()">
+                <i class="bi-eye-slash" id="eye"></i>
+            </a>
         </div>
         <button type="submit" class="btn btn-primary">Sign Up</button>
     </form>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/scripts/signupIndex.js"></script>
 {% endblock %}
