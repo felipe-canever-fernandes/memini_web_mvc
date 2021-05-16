@@ -2,6 +2,8 @@
 
 namespace Core\Router;
 
+require_once __DIR__ . '/exceptions.php';
+
 class Router
 {
     private array $routes;
