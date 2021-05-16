@@ -125,13 +125,13 @@ class User extends Model
         return $errors;
     }
 
-    private static function emailExists(string $email): bool
+    public static function selectByEmail($email)
     {
         $connection = self::getConnection();
 
         $statement = $connection->prepare(
             '
-            SELECT *
+            SELECT `user_id`, `name`, `email`, `hashed_password`
             FROM `user`
             WHERE `email` = :email
             LIMIT 1;
@@ -141,7 +141,22 @@ class User extends Model
         $statement->bindValue(':email', $email);
 
         $statement->execute();
+        $result = $statement->fetch();
 
-        return $statement->fetch() !== false;
+        if (!$result)
+            return false;
+
+        return new User(
+            $result['name'],
+            $result['email'],
+            $result['hashed_password'],
+            true,
+            intval($result['user_id'])
+        );
+    }
+
+    private static function emailExists(string $email): bool
+    {
+        return self::selectByEmail($email) !== false;
     }
 }
