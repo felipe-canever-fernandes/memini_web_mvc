@@ -7,13 +7,19 @@
 
     <form method="post" action="/signup/insert">
         <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ user.getName }}" required>
+            <input
+                    type="text"
+                    placeholder="Name"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    value="{{ user.getName }}" required
+            >
         </div>
         <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
             <input
                     type="email"
+                    placeholder="Email"
                     class="form-control {% if errors.email is defined %}is-invalid{% endif %}"
                     id="email"
                     name="email"
@@ -27,10 +33,10 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
+        <div class="input-group mb-3">
             <input
                     type="password"
+                    placeholder="Password"
                     class="form-control"
                     id="password"
                     name="password"
