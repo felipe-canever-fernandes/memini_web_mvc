@@ -20,7 +20,7 @@ class Signup extends Controller
         $user = new User($_POST['name'], $_POST['email'], $_POST['password'], false);
 
         try {
-            User::insert($user);
+            User::save($user);
             Router::redirect('/signup/success');
         } catch (ValidationErrorException $exception) {
             View::render('signup/index.twig', [

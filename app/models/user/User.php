@@ -92,7 +92,7 @@ class User extends Model
     /**
      * @throws ValidationErrorException
      */
-    public static function insert(User $user): bool
+    public static function save(User $user): bool
     {
         $connection = self::getConnection();
 
