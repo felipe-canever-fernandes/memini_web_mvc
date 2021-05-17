@@ -21,9 +21,9 @@ class Router
         self::$routes[$pathPattern] = $matcher;
     }
 
-    public static function addPath(string $path, Parameters $parameters): void
+    public static function addPath(string $path, Route $route): void
     {
-        self::addPathPattern($path, fn($matches) => $parameters);
+        self::addPathPattern($path, fn($matches) => $route);
     }
 
     /**
@@ -33,16 +33,16 @@ class Router
      */
     public static function dispatch(string $path): void
     {
-        $parameters = self::match($path);
+        $route = self::match($path);
 
-        $Controller = "\\App\\Controllers\\{$parameters->getController()}";
+        $Controller = "\\App\\Controllers\\{$route->getController()}";
 
         if (!class_exists($Controller))
             throw new ControllerNotFoundException($Controller);
 
         $controller = new $Controller;
 
-        $action = $parameters->getAction();
+        $action = $route->getAction();
 
         if (!$controller->actionExists($action))
             throw new ActionNotFoundException("$Controller::$action");
@@ -59,7 +59,7 @@ class Router
     /**
      * @throws RouteNotFoundException
      */
-    private static function match(string $path): Parameters
+    private static function match(string $path): Route
     {
         foreach (self::$routes as $pattern => $matcher)
             if (preg_match($pattern, $path, $matches))

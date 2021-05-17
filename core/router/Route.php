@@ -2,7 +2,7 @@
 
 namespace Core\Router;
 
-class Parameters
+class Route
 {
     private string $controller;
     private string $action;
