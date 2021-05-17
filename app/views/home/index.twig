@@ -3,5 +3,5 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <h1>Welcome, {{ name }}!</h1>
+    <h1>Welcome{% if session.user is defined %}, {{ session.user.getName }}{% else %} to Memini{% endif %}!</h1>
 {% endblock %}
