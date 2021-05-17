@@ -87,6 +87,7 @@ class User extends Model
     public function setHashedPassword($hashedPassword): void
     {
         $this->hashedPassword = $hashedPassword;
+        $this->password = '';
     }
 
     /**
