@@ -21,7 +21,7 @@ class Signup extends Controller
         if (!isset($_POST['signup']))
             Router::redirect('/signup');
 
-        $user = new User($_POST['name'], $_POST['email'], $_POST['password'], false);
+        $user = new User($_POST['name'], $_POST['email'], $_POST['password'], false, false);
 
         try {
             User::save($user);

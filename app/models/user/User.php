@@ -16,9 +16,15 @@ class User extends Model
     private string $email;
     private string $password;
     private string $hashedPassword;
+    private bool $isAdministrator;
 
     public function __construct(
-        string $name, string $email, string $password, bool $isPasswordHashed = false, int $id = 0
+        string $name,
+        string $email,
+        string $password,
+        bool $isPasswordHashed,
+        bool $isAdministrator = false,
+        int $id = 0
     )
     {
         $this->id = $id;
@@ -32,6 +38,8 @@ class User extends Model
             $this->password = '';
             $this->hashedPassword = $password;
         }
+
+        $this->isAdministrator = $isAdministrator;
     }
 
     public function getId(): int
@@ -92,6 +100,16 @@ class User extends Model
         $this->password = '';
     }
 
+    public function isAdministrator(): bool
+    {
+        return $this->isAdministrator;
+    }
+
+    public function setIsAdministrator(bool $isAdministrator): void
+    {
+        $this->isAdministrator = $isAdministrator;
+    }
+
     /**
      * @throws ValidationErrorException
      */
@@ -106,14 +124,15 @@ class User extends Model
 
         $statement = $connection->prepare(
             '
-            INSERT INTO `user`  (`name`,    `email`,    `hashed_password`)
-            VALUE               (:name,     :email,     :hashedPassword);
+            INSERT INTO `user`  (`name`,    `email`,    `hashed_password`,  `is_administrator`)
+            VALUE               (:name,     :email,     :hashedPassword,   :isAdministrator);
             '
         );
 
         $statement->bindValue(':name',              $user->getName());
         $statement->bindValue(':email',             $user->getEmail());
         $statement->bindValue(':hashedPassword',    $user->getHashedPassword());
+        $statement->bindValue(':isAdministrator',   $user->isAdministrator(), PDO::PARAM_BOOL);
 
         $result = $statement->execute();
 
@@ -141,7 +160,7 @@ class User extends Model
 
         $statement = $connection->prepare(
             '
-            SELECT `user_id`, `name`, `email`, `hashed_password`
+            SELECT `user_id`, `name`, `email`, `hashed_password`, `is_administrator`
             FROM `user`
             WHERE `user_id` = :id
             LIMIT 1;
@@ -161,7 +180,8 @@ class User extends Model
             $result['email'],
             $result['hashed_password'],
             true,
-            intval($result['user_id'])
+            $result['is_administrator'],
+            $result['user_id']
         );
     }
 
@@ -171,7 +191,7 @@ class User extends Model
 
         $statement = $connection->prepare(
             '
-            SELECT `user_id`, `name`, `email`, `hashed_password`
+            SELECT `user_id`, `name`, `email`, `hashed_password`, `is_administrator`
             FROM `user`
             WHERE `email` = :email
             LIMIT 1;
@@ -191,7 +211,8 @@ class User extends Model
             $result['email'],
             $result['hashed_password'],
             true,
-            intval($result['user_id'])
+            $result['is_administrator'],
+            $result['user_id']
         );
     }
 
