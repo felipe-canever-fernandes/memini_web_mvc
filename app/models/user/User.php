@@ -145,11 +145,46 @@ class User extends Model
         return true;
     }
 
-    public static function validate(User $user): array
+    /**
+     * @throws ValidationErrorException
+     */
+    public static function update(User $user, bool $passwordChanged = true): bool
+    {
+        $connection = self::getConnection();
+
+        $errors = self::validate($user, self::findById($user->getId())->getEmail());
+
+        if (!empty($errors))
+            throw new ValidationErrorException(self::class, $errors);
+
+        $password = $passwordChanged ? ', `hashed_password` = :hashedPassword' : '';
+
+        $statement = $connection->prepare(
+            "
+            UPDATE `user`
+            SET `name` = :name, `email` = :email, `is_administrator` = :isAdministrator $password
+            WHERE `user_id` = :id;
+            "
+        );
+
+        $statement->bindValue(':id',                $user->getId(),             PDO::PARAM_INT);
+        $statement->bindValue(':name',              $user->getName());
+        $statement->bindValue(':email',             $user->getEmail());
+        $statement->bindValue(':isAdministrator',   $user->isAdministrator(),   PDO::PARAM_BOOL);
+
+        if ($passwordChanged)
+            $statement->bindValue(':hashedPassword',    $user->getHashedPassword());
+
+        $result = $statement->execute();
+
+        return $result != false;
+    }
+
+    public static function validate(User $user, string $except = ''): array
     {
         $errors = [];
 
-        if (self::emailExists($user->getEmail()))
+        if (self::emailExists($user->getEmail(), $except))
             $errors['email'][] = 'This email has already been taken.';
 
         return $errors;
@@ -186,7 +221,7 @@ class User extends Model
         );
     }
 
-    public static function findByEmail(string $email)
+    public static function findByEmail(string $email, string $except = '')
     {
         $connection = self::getConnection();
 
@@ -194,12 +229,13 @@ class User extends Model
             '
             SELECT `user_id`, `name`, `email`, `hashed_password`, `is_administrator`
             FROM `user`
-            WHERE `email` = :email
+            WHERE `email` = :email AND `email` != :except
             LIMIT 1;
             '
         );
 
         $statement->bindValue(':email', $email);
+        $statement->bindValue(':except', $except);
 
         $statement->execute();
         $result = $statement->fetch();
@@ -217,9 +253,9 @@ class User extends Model
         );
     }
 
-    private static function emailExists(string $email): bool
+    private static function emailExists(string $email, string $except = ''): bool
     {
-        return self::findByEmail($email) !== false;
+        return self::findByEmail($email, $except) !== false;
     }
 
     public static function authenticate(string $email, string $password)
