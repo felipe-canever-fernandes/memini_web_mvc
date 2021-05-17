@@ -125,7 +125,7 @@ class User extends Model
         return $errors;
     }
 
-    public static function findByEmail($email)
+    public static function findByEmail(string $email)
     {
         $connection = self::getConnection();
 
