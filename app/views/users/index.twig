@@ -13,6 +13,7 @@
             <th scope="col">Profile</th>
             <th scope="col">Email</th>
             <th scope="col">Name</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -23,6 +24,7 @@
                 </th>
                 <td>{{ user.getEmail }}</td>
                 <td>{{ user.getName }}</td>
+                <td><a class="btn btn-sm btn-primary" href="/users/{{ user.getId }}/edit">Edit</a></td>
             </tr>
         {% endfor %}
         </tbody>

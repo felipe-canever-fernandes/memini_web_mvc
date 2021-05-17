@@ -1,0 +1,65 @@
+{% extends "base.twig" %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <h1>Edit User</h1>
+
+    <form method="post" action="/users/update">
+        <input type="hidden" name="id" value="{{ user.getId }}">
+        <div class="mb-3">
+            <input
+                    type="text"
+                    placeholder="Name"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    value="{{ user.getName }}" required
+            >
+        </div>
+        <div class="mb-3">
+            <input
+                    type="email"
+                    placeholder="Email"
+                    class="form-control {% if errors.email is defined %}is-invalid{% endif %}"
+                    id="email"
+                    name="email"
+                    value="{{ user.getEmail }}"
+                    required
+                    aria-describedby="emailValidation"
+            >
+            <div id="emailValidation" class="invalid-feedback">
+                {% for message in errors.email %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <input
+                    type="password"
+                    placeholder="Password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+            >
+            <a href="#" class="btn btn-outline-secondary" onclick="toggleVisibility()">
+                <i class="bi-eye-slash" id="eye"></i>
+            </a>
+        </div>
+        <div class="mb-3 form-check">
+            <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="isAdministrator"
+                    name="isAdministrator"
+                    {% if user.isAdministrator %}checked{% endif %}
+            >
+            <label class="form-check-label" for="isAdministrator">Administrator</label>
+        </div>
+        <button type="submit" class="btn btn-primary" name="update">Update User</button>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/scripts/signupIndex.js"></script>
+{% endblock %}
