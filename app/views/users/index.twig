@@ -24,9 +24,47 @@
                 </th>
                 <td>{{ user.getEmail }}</td>
                 <td>{{ user.getName }}</td>
-                <td><a class="btn btn-sm btn-primary" href="/users/{{ user.getId }}/edit">Edit</a></td>
+                <td>
+                    <a class="btn btn-sm btn-primary" href="/users/{{ user.getId }}/edit">Edit</a>
+                    {% if user.getId != signedInUser.getId %}
+                        <button
+                                type="button"
+                                class="btn btn-sm btn-danger"
+                                onclick="displayModal({{ user.getId }}, '{{ user.getName }}', '{{ user.getEmail }}')"
+                                data-bs-toggle="modal" data-bs-target="#modal"
+                        >
+                            Delete
+                        </button>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Delete User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete user <strong><span id="userNameSpan"></span></strong>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form method="post" action="users/delete">
+                        <input type="hidden" id="userIdInput" name="userId" value="">
+                        <button type="submit" class="btn btn-danger" name="delete">Delete User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/scripts/usersIndex.js"></script>
 {% endblock %}
