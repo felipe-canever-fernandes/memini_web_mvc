@@ -15,7 +15,7 @@ abstract class Controller
     {
         $method =  self::actionToMethod($name);
 
-        if (!self::doBefore())
+        if (!$this->doBefore())
             return;
 
         call_user_func_array([$this, $method], $arguments);
