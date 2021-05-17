@@ -3,6 +3,7 @@
 namespace App\Models\User;
 
 require_once __DIR__ . '/../exceptions.php';
+require_once __DIR__ . '/exceptions.php';
 
 use PDO;
 
@@ -77,7 +78,7 @@ class User extends Model
      */
     public function getPassword(): string
     {
-        if (empty($this->password))
+        if ($this->password == '')
             throw new PasswordNotSetException();
 
         return $this->password;
