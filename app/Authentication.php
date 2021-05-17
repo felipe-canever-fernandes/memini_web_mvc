@@ -41,6 +41,17 @@ class Authentication
         if (self::isUserSignedIn())
             return;
 
+        self::saveRequestedPage();
         Router::redirect('/signin');
+    }
+
+    private static function saveRequestedPage(): void
+    {
+        $_SESSION['requestedPage'] = $_SERVER['REQUEST_URI'];
+    }
+
+    public static function getRequestedPage(): string
+    {
+        return $_SESSION['requestedPage'] ?? '/';
     }
 }

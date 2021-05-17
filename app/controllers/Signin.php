@@ -24,7 +24,7 @@ class Signin extends Controller
 
         if ($result instanceof User) {
             Authentication::signIn($result);
-            Router::redirect('/');
+            Router::redirect(Authentication::getRequestedPage());
         }
         else
             View::render('signin/index.twig', [
