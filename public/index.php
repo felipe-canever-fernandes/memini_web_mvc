@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Core\Router\ObjectRoute;
 use Core\Router\Route;
 use Core\Router\Router;
 
@@ -13,6 +14,11 @@ Router::addPath('', new Route('Home'));
 Router::addPathPattern(
         '{controller}/{action}',
         fn($matches) => new Route($matches["controller"], $matches["action"])
+);
+
+Router::addPathPattern(
+    '{controller}/{id:\d+}/{action}',
+    fn($matches) => new ObjectRoute($matches["controller"], intval($matches["id"]), $matches["action"])
 );
 
 Router::addPathPattern(
