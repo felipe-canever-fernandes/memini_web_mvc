@@ -303,4 +303,20 @@ class User extends Model
             $statement->fetchAll()
         );
     }
+
+    public static function delete(int $id): bool
+    {
+        $connection = self::getConnection();
+
+        $statement = $connection->prepare(
+            '
+            DELETE FROM `user`
+            WHERE `user_id` = :id;
+            '
+        );
+
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+
+        return $statement->execute() != false;
+    }
 }

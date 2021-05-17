@@ -86,4 +86,12 @@ class Users extends Controller
 
         View::render('users/edit.twig', $parameters);
     }
+
+    public function deleteAction(): void
+    {
+        if (isset($_POST['delete']))
+            User::delete($_POST['userId']);
+
+        Router::redirect('/users');
+    }
 }
