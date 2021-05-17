@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Authorization;
+use App\Models\User\User;
 use Core\Controller;
 use Core\View\View;
 
@@ -16,6 +17,6 @@ class Users extends Controller
 
     public function indexAction(): void
     {
-        View::render('users/index.twig');
+        View::render('users/index.twig', ['users' => User::findAll()]);
     }
 }

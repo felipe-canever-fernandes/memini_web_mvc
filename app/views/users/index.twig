@@ -4,4 +4,25 @@
 
 {% block body %}
     <h1>Users</h1>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Profile</th>
+            <th scope="col">Email</th>
+            <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <th scope="row">
+                    <i class="bi-person-{% if user.isAdministrator %}badge{% else %}circle{% endif %}"></i>
+                </th>
+                <td>{{ user.getEmail }}</td>
+                <td>{{ user.getName }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
