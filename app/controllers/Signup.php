@@ -33,9 +33,4 @@ class Signup extends Controller
             ]);
         }
     }
-
-    public function successAction(): void
-    {
-        View::render('signup/success.twig');
-    }
 }
