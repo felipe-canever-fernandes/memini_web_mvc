@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Authentication;
 use App\Models\Post;
 
 use Core\Controller;
@@ -9,6 +10,12 @@ use Core\View\View;
 
 class Posts extends Controller
 {
+    public function doBefore(): bool
+    {
+        Authentication::requestSignin();
+        return true;
+    }
+
     public function indexAction(): void
     {
         View::render('posts/index.twig', ['posts' => Post::getAll()]);
