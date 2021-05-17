@@ -4,6 +4,8 @@ namespace App\Models\User;
 
 require_once __DIR__ . '/../exceptions.php';
 
+use PDO;
+
 use App\Models\ValidationErrorException;
 use Core\Model;
 
@@ -131,6 +133,36 @@ class User extends Model
             $errors['email'][] = 'This email has already been taken.';
 
         return $errors;
+    }
+
+    public static function findById(int $id)
+    {
+        $connection = self::getConnection();
+
+        $statement = $connection->prepare(
+            '
+            SELECT `user_id`, `name`, `email`, `hashed_password`
+            FROM `user`
+            WHERE `user_id` = :id
+            LIMIT 1;
+            '
+        );
+
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $statement->execute();
+        $result = $statement->fetch();
+
+        if (!$result)
+            return false;
+
+        return new User(
+            $result['name'],
+            $result['email'],
+            $result['hashed_password'],
+            true,
+            intval($result['user_id'])
+        );
     }
 
     public static function findByEmail(string $email)
