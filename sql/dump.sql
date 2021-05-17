@@ -1,0 +1,7 @@
+START TRANSACTION;
+
+DROP DATABASE IF EXISTS `avii_desenvweb`;
+
+CREATE DATABASE `avii_desenvweb`;
+
+COMMIT;
