@@ -239,4 +239,31 @@ class User extends Model
         $user->setPassword($password);
         return $user;
     }
+
+    public static function findAll(): array
+    {
+        $connection = self::getConnection();
+
+        $statement = $connection->prepare(
+            '
+            SELECT `user_id`, `name`, `email`, `hashed_password`, `is_administrator`
+            FROM `user`;
+            '
+        );
+
+        $statement->execute();
+
+        return array_map(
+            fn ($result) => new User(
+                $result['name'],
+                $result['email'],
+                $result['hashed_password'],
+                true,
+                $result['is_administrator'],
+                $result['user_id']
+            ),
+
+            $statement->fetchAll()
+        );
+    }
 }
