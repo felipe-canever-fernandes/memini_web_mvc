@@ -21,7 +21,11 @@ class Signup extends Controller
 
         try {
             User::save($user);
-            Router::redirect('/signup/success');
+
+            $user->setHashedPassword('');
+            $_SESSION['user'] = $user;
+
+            Router::redirect('/');
         } catch (ValidationErrorException $exception) {
             View::render('signup/index.twig', [
                 'user' => $user,
