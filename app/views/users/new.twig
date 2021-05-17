@@ -48,7 +48,13 @@
             </a>
         </div>
         <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="isAdministrator" name="isAdministrator">
+            <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="isAdministrator"
+                    name="isAdministrator"
+                    {% if user.isAdministrator %}checked{% endif %}
+            >
             <label class="form-check-label" for="isAdministrator">Administrator</label>
         </div>
         <button type="submit" class="btn btn-success" name="create">Create User</button>
