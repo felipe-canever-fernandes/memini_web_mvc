@@ -2,6 +2,8 @@
 
 namespace Core\Router;
 
+use MongoDB\BSON\ObjectId;
+
 require_once __DIR__ . '/exceptions.php';
 
 class Router
@@ -11,6 +13,7 @@ class Router
     public static function addPathPattern(string $pathPattern, Callable $matcher): void
     {
         $pathPattern = preg_replace('/\//', '\\/', $pathPattern);
+        $pathPattern = preg_replace('/{([a-z]+):(.+?)}/', '(?P<\1>\2)', $pathPattern);
         $pathPattern = preg_replace('/{([a-z]+)}/', '(?P<\1>[a-z-]+)', $pathPattern);
 
         if (empty($pathPattern))
@@ -47,7 +50,10 @@ class Router
         if (!$controller->actionExists($action))
             throw new ActionNotFoundException("$Controller::$action");
 
-        $controller->$action();
+        if (!($route instanceof ObjectRoute))
+            $controller->$action();
+        else
+            $controller->$action($route->getId());
     }
 
     public static function redirect(string $path): void
