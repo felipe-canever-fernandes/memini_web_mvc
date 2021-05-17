@@ -19,8 +19,12 @@ class Signin extends Controller
     {
         $result = User::authenticate($_POST['email'], $_POST['password']);
 
-        if ($result instanceof User)
+        if ($result instanceof User) {
+            $result->setHashedPassword('');
+            $_SESSION['user'] = $result;
+
             Router::redirect('/');
+        }
         else
             View::render('signin/index.twig', [
                 'email' => $_POST['email'],
