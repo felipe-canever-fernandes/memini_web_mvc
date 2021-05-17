@@ -17,9 +17,14 @@ class Authentication
         session_destroy();
     }
 
+    public static function isUserSignedIn(): bool
+    {
+        return isset($_SESSION['userId']);
+    }
+
     public static function getSignedInUser()
     {
-        if (!isset($_SESSION['userId']))
+        if (!self::isUserSignedIn())
             return false;
 
         $result = User::findById(intval($_SESSION['userId']));
