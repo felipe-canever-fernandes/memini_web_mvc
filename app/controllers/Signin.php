@@ -17,6 +17,9 @@ class Signin extends Controller
 
     public function readAction(): void
     {
+        if (!isset($_POST['signin']))
+            Router::redirect('/signin');
+
         $result = User::authenticate($_POST['email'], $_POST['password']);
 
         if ($result instanceof User) {
