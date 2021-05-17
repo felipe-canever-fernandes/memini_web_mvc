@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Authentication;
 use App\Models\User\User;
 use App\Models\ValidationErrorException;
 use Core\Controller;
@@ -21,10 +22,7 @@ class Signup extends Controller
 
         try {
             User::save($user);
-
-            $user->setHashedPassword('');
-            $_SESSION['user'] = $user;
-
+            Authentication::signIn($user);
             Router::redirect('/');
         } catch (ValidationErrorException $exception) {
             View::render('signup/index.twig', [

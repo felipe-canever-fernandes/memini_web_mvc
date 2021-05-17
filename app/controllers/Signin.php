@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Authentication;
 use App\Models\User\User;
-use App\Models\ValidationErrorException;
 use Core\Controller;
 use Core\Router\Router;
 use Core\View\View;
@@ -20,9 +20,7 @@ class Signin extends Controller
         $result = User::authenticate($_POST['email'], $_POST['password']);
 
         if ($result instanceof User) {
-            $result->setHashedPassword('');
-            $_SESSION['user'] = $result;
-
+            Authentication::signIn($result);
             Router::redirect('/');
         }
         else
@@ -35,9 +33,7 @@ class Signin extends Controller
 
     public function signoutAction(): void
     {
-        $_SESSION = [];
-        session_destroy();
-
+        Authentication::signOut();
         Router::redirect('/');
     }
 }
