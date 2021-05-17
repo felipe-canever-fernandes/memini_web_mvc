@@ -32,4 +32,12 @@ class Signin extends Controller
                 'errors' => $result
             ]);
     }
+
+    public function signoutAction(): void
+    {
+        $_SESSION = [];
+        session_destroy();
+
+        Router::redirect('/');
+    }
 }
