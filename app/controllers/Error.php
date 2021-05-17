@@ -11,4 +11,9 @@ class Error extends Controller
     {
         View::render('error/forbidden.twig');
     }
+
+    public function notFoundAction(): void
+    {
+        View::render('error/not-found.twig');
+    }
 }
