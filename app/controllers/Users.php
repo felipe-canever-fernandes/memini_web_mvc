@@ -19,4 +19,9 @@ class Users extends Controller
     {
         View::render('users/index.twig', ['users' => User::findAll()]);
     }
+
+    public function newAction(): void
+    {
+        View::render('users/new.twig');
+    }
 }
