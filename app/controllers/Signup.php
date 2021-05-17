@@ -18,6 +18,9 @@ class Signup extends Controller
 
     public function insertAction(): void
     {
+        if (!isset($_POST['signup']))
+            Router::redirect('/signup');
+
         $user = new User($_POST['name'], $_POST['email'], $_POST['password'], false);
 
         try {
