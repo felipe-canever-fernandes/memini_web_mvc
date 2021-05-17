@@ -53,6 +53,11 @@ class Users extends Controller
 
     public function editAction(int $id)
     {
-        View::render('users/edit.twig', ['user' => User::findById($id)]);
+        $user = User::findById($id);
+
+        if (!$user)
+            Router::redirect('/error/not-found');
+
+        View::render('users/edit.twig', ['user' => $user]);
     }
 }
