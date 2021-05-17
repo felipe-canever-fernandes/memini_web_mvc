@@ -113,7 +113,14 @@ class User extends Model
         $statement->bindValue(':email',             $user->getEmail());
         $statement->bindValue(':hashedPassword',    $user->getHashedPassword());
 
-        return $statement->execute();
+        $result = $statement->execute();
+
+        if (!$result)
+            return false;
+
+        $user->setId($connection->lastInsertId());
+
+        return true;
     }
 
     public static function validate(User $user): array
