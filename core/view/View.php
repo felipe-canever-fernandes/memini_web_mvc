@@ -8,6 +8,8 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
 
+use App\Authentication;
+
 class View
 {
     private static ?Environment $twig = null;
@@ -21,7 +23,7 @@ class View
             $loader = new FilesystemLoader(__DIR__ . '/../../app/views');
             self::$twig = new Environment($loader);
 
-            self::$twig->addGlobal('session', $_SESSION);
+            self::$twig->addGlobal('signedInUser', Authentication::getSignedInUser());
         }
 
         try {
