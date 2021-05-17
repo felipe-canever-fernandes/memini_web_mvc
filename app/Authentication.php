@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\User\User;
+use Core\Router\Router;
 
 class Authentication
 {
@@ -33,5 +34,13 @@ class Authentication
             return false;
 
         return $result;
+    }
+
+    public static function requestSignin(): void
+    {
+        if (self::isUserSignedIn())
+            return;
+
+        Router::redirect('/signin');
     }
 }
