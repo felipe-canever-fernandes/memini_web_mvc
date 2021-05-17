@@ -46,16 +46,20 @@
                 <i class="bi-eye-slash" id="eye"></i>
             </a>
         </div>
-        <div class="mb-3 form-check">
-            <input
-                    type="checkbox"
-                    class="form-check-input"
-                    id="isAdministrator"
-                    name="isAdministrator"
-                    {% if user.isAdministrator %}checked{% endif %}
-            >
-            <label class="form-check-label" for="isAdministrator">Administrator</label>
-        </div>
+        {% if user.getId != signedInUser.getId %}
+            <div class="mb-3 form-check">
+                <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="isAdministrator"
+                        name="isAdministrator"
+                        {% if user.isAdministrator %}checked{% endif %}
+                >
+                <label class="form-check-label" for="isAdministrator">Administrator</label>
+            </div>
+        {% elseif user.isAdministrator %}
+            <input type="hidden" name="isAdministrator">
+        {% endif %}
         <button type="submit" class="btn btn-primary" name="update">Update User</button>
     </form>
 {% endblock %}

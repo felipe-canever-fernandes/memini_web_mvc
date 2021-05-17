@@ -60,4 +60,30 @@ class Users extends Controller
 
         View::render('users/edit.twig', ['user' => $user]);
     }
+
+    public function updateAction(): void
+    {
+        if (!isset($_POST['update']))
+            Router::redirect('/users');
+
+        $user = new User(
+            $_POST['name'],
+            $_POST['email'],
+            $_POST['password'],
+            false,
+            isset($_POST['isAdministrator']),
+            $_POST['id']
+        );
+
+        $parameters = ['user' => $user];
+        $passwordChanged = $_POST['password'] != '';
+
+        try {
+            User::update($user, $passwordChanged);
+        } catch (ValidationErrorException $exception) {
+            $parameters['errors'] = $exception->getErrors();
+        }
+
+        View::render('users/edit.twig', $parameters);
+    }
 }
