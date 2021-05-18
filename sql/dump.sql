@@ -21,4 +21,15 @@ INSERT INTO `avii_desenvweb`.`user` (`name`,	    `email`,                       
 --                                                                                          060193
 VALUES								("Felipe",		"felipe.canever.fernandes@outlook.com", "$2y$10$33buAp7lQlCf2AetVfKjeuJ6AR9zf7PtoNqVZKRKuqm.Xi4wPL52K", TRUE);
 
+-- Deck
+CREATE TABLE `avii_desenvweb`.`deck`(
+    `deck_id`		INT 			NOT NULL	AUTO_INCREMENT,
+    `user_id`		INT 			NOT NULL,
+    `title`			VARCHAR(255)	NOT NULL,
+    `description`	VARCHAR(255)	NOT NULL	DEFAULT "",
+
+    PRIMARY KEY	(`deck_id`),
+    FOREIGN KEY	(`user_id`)	REFERENCES	`avii_desenvweb`.`user`	(`user_id`)
+);
+
 COMMIT;
