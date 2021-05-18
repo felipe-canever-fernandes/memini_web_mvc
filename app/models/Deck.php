@@ -72,4 +72,64 @@ class Deck extends Model
             $statement->fetchAll()
         );
     }
+
+    /**
+     * @throws ValidationErrorException
+     */
+    public static function save(Deck $deck): void
+    {
+        $errors = self::validate($deck);
+
+        if (!empty($errors))
+            throw new ValidationErrorException(self::class, $errors);
+
+        $connection = self::getConnection();
+
+        $statement = $connection->prepare(
+            '
+            INSERT INTO `deck`
+                (`user_id`, `title`, `description`)
+            VALUES
+                (:userId, :title, :description);
+            '
+        );
+
+        $statement->bindValue(':userId',        $deck->getUserId(),         PDO::PARAM_INT);
+        $statement->bindValue(':title',         $deck->getTitle(),          PDO::PARAM_STR);
+        $statement->bindValue(':description',   $deck->getDescription(),    PDO::PARAM_STR);
+
+        $statement->execute();
+        $deck->setId($connection->lastInsertId());
+    }
+
+    public static function validate(Deck $deck): array
+    {
+        $errors = [];
+
+        if (self::deckExists($deck))
+            $errors['title'][] = 'You already have a deck with this title.';
+
+        return $errors;
+    }
+
+    public static function deckExists(Deck $deck): bool
+    {
+        $connection = self::getConnection();
+
+        $statement = $connection->prepare(
+            '
+            SELECT `deck_id`
+            FROM `deck`
+            WHERE `user_id` = :userId AND `title` = :title
+            LIMIT 1;
+            '
+        );
+
+        $statement->bindValue(':userId',    $deck->getUserId(), PDO::PARAM_INT);
+        $statement->bindValue(':title',     $deck->getTitle(),  PDO::PARAM_STR);
+
+        $statement->execute();
+
+        return $statement->fetch() != false;
+    }
 }

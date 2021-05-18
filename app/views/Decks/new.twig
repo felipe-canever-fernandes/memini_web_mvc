@@ -15,11 +15,18 @@
             <div class="mb-3">
                 <input
                         type="text"
-                        class="form-control"
+                        class="form-control {% if errors.title is defined %}is-invalid{% endif %}"
                         id="title" name="title"
                         placeholder="Title"
+                        value="{{ deck.getTitle }}"
+                        aria-describedby="titleValidationFeedback"
                         required
                 >
+                <div id="titleValidationFeedback" class="invalid-feedback">
+                    {% for message in errors.title %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
             </div>
             <!-- Description -->
             <div class="mb-3">
@@ -28,6 +35,7 @@
                         class="form-control"
                         id="description" name="description"
                         placeholder="Description"
+                        value="{{ deck.getDescription }}"
                 >
             </div>
             <!-- Create Deck -->
