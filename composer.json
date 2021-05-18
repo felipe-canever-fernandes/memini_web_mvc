@@ -2,7 +2,8 @@
     "name": "felipe-canever-fernandes/memini",
     "type": "project",
     "require": {
-        "twig/twig": "^3.3"
+        "twig/twig": "^3.3",
+      "ext-pdo": "*"
     },
     "authors": [
         {
