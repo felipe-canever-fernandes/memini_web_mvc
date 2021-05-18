@@ -1,0 +1,28 @@
+{% extends "base.twig" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="styles/deck.css">
+{% endblock %}
+
+{% block title %}Decks{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <h1>Decks</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="d-flex flex-wrap justify-content-center">
+            {% for deck in decks %}
+                <div class="card text-center m-3 p-3 shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ deck.getTitle }}</h5>
+                        <p class="card-text">{{ deck.getDescription }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
