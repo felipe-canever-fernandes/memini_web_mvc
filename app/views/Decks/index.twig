@@ -19,9 +19,12 @@
         <div class="d-flex flex-wrap justify-content-center">
             {% for deck in decks %}
                 <div class="card text-center m-3 p-3 shadow">
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ deck.getTitle }}</h5>
                         <p class="card-text">{{ deck.getDescription }}</p>
+                        <div class="mt-auto d-flex flex-column">
+                            <a href="#" class="btn btn-sm btn-outline-primary m-1">Edit</a>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
