@@ -1,0 +1,45 @@
+{% extends "base.twig" %}
+
+{% block title %}Edit Deck{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <h1>Edit Deck</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <form method="post" action="/decks/update">
+            <!-- Title -->
+            <div class="mb-3">
+                <input
+                        type="text"
+                        class="form-control {% if errors.title is defined %}is-invalid{% endif %}"
+                        id="title" name="title"
+                        placeholder="Title"
+                        value="{{ deck.getTitle }}"
+                        aria-describedby="titleValidationFeedback"
+                        required
+                >
+                <div id="titleValidationFeedback" class="invalid-feedback">
+                    {% for message in errors.title %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Description -->
+            <div class="mb-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        id="description" name="description"
+                        placeholder="Description"
+                        value="{{ deck.getDescription }}"
+                >
+            </div>
+            <!-- Edit Deck -->
+            <button type="submit" class="btn btn-primary" name="update">Edit Deck</button>
+        </form>
+    </div>
+{% endblock %}

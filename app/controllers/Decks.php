@@ -49,4 +49,17 @@ class Decks extends Controller
             ]);
         }
     }
+
+    public function editAction(int $id): void
+    {
+        $result = Deck::findById($id);
+
+        if ($result === false)
+            Router::redirect('/error/not-found');
+
+        if ($result->getUserId() !== Authentication::getSignedInUser()->getId())
+            Router::redirect('/error/forbidden');
+
+        View::render('decks/edit.twig', ['deck' => $result]);
+    }
 }
