@@ -9,6 +9,12 @@ use Core\View\View;
 
 class Decks extends Controller
 {
+    public function doBefore(): bool
+    {
+        Authentication::requestSignin();
+        return true;
+    }
+
     public function indexAction(): void
     {
         $decks = Deck::findAllByUser(Authentication::getSignedInUser()->getId());
