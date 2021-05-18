@@ -51,6 +51,35 @@ class Deck extends Model
         $this->description = $description;
     }
 
+    public static function findById(int $id)
+    {
+        $connection = self::getConnection();
+
+        $statement = $connection->prepare(
+            '
+            SELECT `deck_id`, `user_id`, `title`, `description`
+            FROM `deck`
+            WHERE `deck_id` = :id
+            LIMIT 1;
+            '
+        );
+
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $result = $statement->fetch();
+
+        if ($result === false)
+            return false;
+
+        return new Deck(
+            $result['user_id'],
+            $result['title'],
+            $result['description'],
+            $result['deck_id']
+        );
+    }
+
     public static function findAllByUser(int $userId): array
     {
         $connection = self::getConnection();
