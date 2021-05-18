@@ -32,9 +32,8 @@ CREATE TABLE `avii_desenvweb`.`deck`(
     `title`			VARCHAR(128)	NOT NULL,
     `description`	VARCHAR(255)	NOT NULL	DEFAULT "",
 
-    PRIMARY     KEY	(`deck_id`),
-    FOREIGN     KEY	(`user_id`)	REFERENCES	`avii_desenvweb`.`user`	(`user_id`),
-    UNIQUE      KEY (`title`)
+    PRIMARY KEY	(`deck_id`),
+    FOREIGN KEY	(`user_id`)	REFERENCES	`avii_desenvweb`.`user`	(`user_id`)
 );
 
 -- Decks
