@@ -36,4 +36,17 @@ CREATE TABLE `avii_desenvweb`.`deck`(
     FOREIGN KEY	(`user_id`)	REFERENCES	`avii_desenvweb`.`user`	(`user_id`)
 );
 
+-- Decks
+INSERT INTO `avii_desenvweb`.`deck`
+        (`user_id`,	`title`,				`description`)
+        -- Felipe
+VALUES	(1,			"Latim",				"Palavras em latim."),
+        (1,			"Francês",				"Palavras em francês."),
+        (1,			"Nomes científicos",	""),
+        -- Lucas
+        (2,			"Inglês",				"Palavras em inglês."),
+        (2,			"Tabela periódica",		"Elementos da tabela periódica."),
+        -- Matheus
+        (3,			"C++",					"");
+
 COMMIT;
