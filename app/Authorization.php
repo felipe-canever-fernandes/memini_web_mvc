@@ -8,7 +8,9 @@ class Authorization
 {
     public static function request(): void
     {
-        if (Authentication::getSignedInUser()->isAdministrator())
+        $signedInUser = Authentication::getSignedInUser();
+
+        if ($signedInUser != false && $signedInUser->isAdministrator())
             return;
 
         Router::redirect('/error/forbidden');
