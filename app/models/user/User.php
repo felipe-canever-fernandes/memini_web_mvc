@@ -12,11 +12,12 @@ use Core\Model;
 
 class User extends Model
 {
-    private int $id;
     private string $name;
     private string $email;
+
     private string $password;
     private string $hashedPassword;
+
     private bool $isAdministrator;
 
     public function __construct(
@@ -28,7 +29,8 @@ class User extends Model
         int $id = 0
     )
     {
-        $this->id = $id;
+        parent::__construct($id);
+
         $this->name = $name;
         $this->email = $email;
 
@@ -41,16 +43,6 @@ class User extends Model
         }
 
         $this->isAdministrator = $isAdministrator;
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     public function getName(): string

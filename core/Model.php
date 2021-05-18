@@ -7,6 +7,29 @@ use App\Configuration;
 
 abstract class Model
 {
+    private int $id;
+
+    public function __construct(int $id = 0)
+    {
+        $this->setId($id);
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = self::validateId($id);
+    }
+
+    protected static function validateId(int $id): int
+    {
+        assert($id >= 0);
+        return $id;
+    }
+
     protected static function getConnection(): PDO
     {
         static $connection = null;
