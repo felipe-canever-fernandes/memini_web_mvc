@@ -29,11 +29,12 @@ VALUES								("Felipe",		"felipe.canever.fernandes@outlook.com",     "$2y$10$33
 CREATE TABLE `avii_desenvweb`.`deck`(
     `deck_id`		INT 			NOT NULL	AUTO_INCREMENT,
     `user_id`		INT 			NOT NULL,
-    `title`			VARCHAR(255)	NOT NULL,
+    `title`			VARCHAR(128)	NOT NULL,
     `description`	VARCHAR(255)	NOT NULL	DEFAULT "",
 
-    PRIMARY KEY	(`deck_id`),
-    FOREIGN KEY	(`user_id`)	REFERENCES	`avii_desenvweb`.`user`	(`user_id`)
+    PRIMARY     KEY	(`deck_id`),
+    FOREIGN     KEY	(`user_id`)	REFERENCES	`avii_desenvweb`.`user`	(`user_id`),
+    UNIQUE      KEY (`title`)
 );
 
 -- Decks
