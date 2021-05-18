@@ -20,4 +20,9 @@ class Decks extends Controller
         $decks = Deck::findAllByUser(Authentication::getSignedInUser()->getId());
         View::render('decks/index.twig', ['decks' => $decks]);
     }
+
+    public function newAction(): void
+    {
+        View::render('decks/new.twig');
+    }
 }

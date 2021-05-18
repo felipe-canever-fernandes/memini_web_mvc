@@ -1,0 +1,37 @@
+{% extends "base.twig" %}
+
+{% block title %}New Deck{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <h1>New Deck</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <form method="post" action="/decks/create">
+            <!-- Title -->
+            <div class="mb-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        id="title" name="title"
+                        placeholder="Title"
+                        required
+                >
+            </div>
+            <!-- Description -->
+            <div class="mb-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        id="description" name="description"
+                        placeholder="Description"
+                >
+            </div>
+            <!-- Create Deck -->
+            <button type="submit" class="btn btn-success" name="create">Create Deck</button>
+        </form>
+    </div>
+{% endblock %}
