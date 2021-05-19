@@ -17,7 +17,7 @@ class Cards extends Controller
         return true;
     }
 
-    public function indexAction(int $deckId): void
+    public static function getDeck(int $deckId): Deck
     {
         $deck = Deck::findById($deckId);
 
@@ -27,11 +27,23 @@ class Cards extends Controller
         if ($deck->getUserId() !== Authentication::getSignedInUser()->getId())
             Router::redirect('/error/forbidden');
 
+        return $deck;
+    }
+
+    public function indexAction(int $deckId): void
+    {
+        $deck = self::getDeck($deckId);
         $cards = Card::findAllByDeck($deckId);
 
         View::render('cards/index.twig', [
             'deck' => $deck,
             'cards' => $cards
         ]);
+    }
+
+    public function newAction(int $deckId): void
+    {
+        $deck = self::getDeck($deckId);
+        View::render('cards/new.twig', ['deck' => $deck]);
     }
 }

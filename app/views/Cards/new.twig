@@ -1,0 +1,46 @@
+{% extends "base.twig" %}
+
+{% block title %}New Card{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <h1>New Card for Deck <em>{{ deck.getTitle }}</em></h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <form method="post" action="/cards/create">
+            <input type="hidden" name="deckId" value="{{ card.getDeckId }}">
+            <!-- Front -->
+            <div class="mb-3">
+                <input
+                        type="text"
+                        class="form-control {% if errors.front is defined %}is-invalid{% endif %}"
+                        id="front" name="front"
+                        placeholder="Front"
+                        value="{{ card.getFront }}"
+                        aria-describedby="frontValidationFeedback"
+                        required
+                >
+                <div id="frontValidationFeedback" class="invalid-feedback">
+                    {% for message in errors.front %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Back -->
+            <div class="mb-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        id="back" name="back"
+                        placeholder="Back"
+                        value="{{ card.getBack }}"
+                >
+            </div>
+            <!-- Create Card -->
+            <button type="submit" class="btn btn-success" name="create">Create Card</button>
+        </form>
+    </div>
+{% endblock %}
