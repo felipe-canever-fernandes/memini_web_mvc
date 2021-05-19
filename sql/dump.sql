@@ -22,7 +22,7 @@ CREATE TABLE `avii_desenvweb`.`deck`(
     `deck_id`		INT 			NOT NULL	AUTO_INCREMENT,
     `user_id`		INT 			NOT NULL,
     `title`			VARCHAR(128)	NOT NULL,
-    `description`	VARCHAR(255)	NOT NULL	DEFAULT "",
+    `description`	VARCHAR(255)	NOT NULL	DEFAULT '',
 
     PRIMARY KEY	(`deck_id`),
     FOREIGN KEY	(`user_id`)	REFERENCES	`avii_desenvweb`.`user`	(`user_id`) ON DELETE CASCADE
@@ -35,11 +35,11 @@ INSERT INTO `avii_desenvweb`.`user`
 
 VALUES
 --                                                              060193
-    ("Felipe",		"felipe.canever.fernandes@outlook.com",     "$2y$10$33buAp7lQlCf2AetVfKjeuJ6AR9zf7PtoNqVZKRKuqm.Xi4wPL52K", TRUE),
+    ('Felipe',		'felipe.canever.fernandes@outlook.com',     '$2y$10$33buAp7lQlCf2AetVfKjeuJ6AR9zf7PtoNqVZKRKuqm.Xi4wPL52K', TRUE),
 --                                                              081293
-    ("Lucas",		"lucas.canever.fernandes@outlook.com",      "$2y$10$tZsYlcu6mGp/SblPIO5KZecgR7axryX/Le8IQv1H98PWIxKA0rCeO", FALSE),
+    ('Lucas',		'lucas.canever.fernandes@outlook.com',      '$2y$10$tZsYlcu6mGp/SblPIO5KZecgR7axryX/Le8IQv1H98PWIxKA0rCeO', FALSE),
 --                                                              120400
-    ("Matheus",		"matheus.canever.fernandes@outlook.com",    "$2y$10$9JUyCEwUUXksBmLXEDdp9.eSI24scg3aR8nKCspWP0M5KMSs4.BYy", FALSE);
+    ('Matheus',		'matheus.canever.fernandes@outlook.com',    '$2y$10$9JUyCEwUUXksBmLXEDdp9.eSI24scg3aR8nKCspWP0M5KMSs4.BYy', FALSE);
 
 
 -- Decks
@@ -47,13 +47,13 @@ INSERT INTO `avii_desenvweb`.`deck`
     (`user_id`,	`title`,				`description`)
 VALUES
 --  Felipe
-    (1,			"Latim",				"Palavras em latim."),
-    (1,			"Francês",				"Palavras em francês."),
-    (1,			"Nomes científicos",	""),
+    (1,			'Latim',				'Palavras em latim.'),
+    (1,			'Francês',				'Palavras em francês.'),
+    (1,			'Nomes científicos',	''),
 --  Lucas
-    (2,			"Inglês",				"Palavras em inglês."),
-    (2,			"Tabela periódica",		"Elementos da tabela periódica."),
+    (2,			'Inglês',				'Palavras em inglês.'),
+    (2,			'Tabela periódica',		'Elementos da tabela periódica.'),
 --  Matheus
-    (3,			"C++",					"");
+    (3,			'C++',					'');
 
 COMMIT;
