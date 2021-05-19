@@ -29,6 +29,27 @@ CREATE TABLE `avii_desenvweb`.`deck`(
 )
 ENGINE = INNODB;
 
+-- Card
+CREATE TABLE `avii_desenvweb`.`card`(
+    `card_id`			INT 			NOT NULL	AUTO_INCREMENT,
+
+    `user_id`			INT 			NOT NULL,
+    `deck_id`			INT 			NOT NULL,
+
+    `front`				VARCHAR(255)	NOT NULL,
+    `back`				VARCHAR(255)	NOT NULL,
+
+    `repetition_count`	INT 			NOT NULL	DEFAULT 0,
+    `time_interval`		INT 			NOT NULL	DEFAULT 0,
+    `ease_factor`		REAL 			NOT NULL	DEFAULT 2.5,
+
+    PRIMARY KEY	(`card_id`),
+
+    FOREIGN KEY	(`user_id`)	REFERENCES	`avii_desenvweb`.`user`	(`user_id`),
+    FOREIGN KEY	(`deck_id`)	REFERENCES	`avii_desenvweb`.`deck`	(`deck_id`) ON DELETE CASCADE
+)
+ENGINE = INNODB;
+
 -- Users
 INSERT INTO `avii_desenvweb`.`user`
     (`name`,	    `email`,                                    `hashed_password`,                                              `is_administrator`)
