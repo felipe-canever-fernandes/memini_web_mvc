@@ -192,4 +192,19 @@ class Deck extends Model
 
         return $statement->fetch() != false;
     }
+
+    public static function delete(int $id)
+    {
+        $connection = self::getConnection();
+
+        $statement = $connection->prepare(
+            '
+            DELETE FROM `deck`
+            WHERE `deck_id` = :id;
+            '
+        );
+
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+    }
 }

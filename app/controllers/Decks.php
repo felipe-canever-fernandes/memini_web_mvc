@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Authentication;
 use App\Models\Deck;
+use App\Models\User\User;
 use App\Models\ValidationErrorException;
 use Core\Controller;
 use Core\Router\Router;
@@ -84,5 +85,13 @@ class Decks extends Controller
         }
 
         View::render('decks/edit.twig', $parameters);
+    }
+
+    public function deleteAction(): void
+    {
+        if (isset($_POST['delete']))
+            Deck::delete($_POST['deckId']);
+
+        Router::redirect('/decks');
     }
 }
