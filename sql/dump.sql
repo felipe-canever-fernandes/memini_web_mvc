@@ -52,15 +52,11 @@ ENGINE = INNODB;
 
 -- Users
 INSERT INTO `avii_desenvweb`.`user`
-    (`name`,	    `email`,                                    `hashed_password`,                                              `is_administrator`)
+    (`name`,	        `email`,                                    `hashed_password`,                                              `is_administrator`)
 
 VALUES
---                                                              060193
-    ('Felipe',		'felipe.canever.fernandes@outlook.com',     '$2y$10$33buAp7lQlCf2AetVfKjeuJ6AR9zf7PtoNqVZKRKuqm.Xi4wPL52K', TRUE),
---                                                              081293
-    ('Lucas',		'lucas.canever.fernandes@outlook.com',      '$2y$10$tZsYlcu6mGp/SblPIO5KZecgR7axryX/Le8IQv1H98PWIxKA0rCeO', FALSE),
---                                                              120400
-    ('Matheus',		'matheus.canever.fernandes@outlook.com',    '$2y$10$9JUyCEwUUXksBmLXEDdp9.eSI24scg3aR8nKCspWP0M5KMSs4.BYy', FALSE);
+    ('Administrator',   'admin@admin.com',                      '$2y$10$x7lXtPf/OvCjr76rR5D67.Jr6JSjctrSSFc2BWPQ2vzFpUTeVBTzW', TRUE),
+    ('User',		    'user@user.com',                        '$2y$10$gYTelaDbYqYz.19LrS8YZeqSytgzdvh6ArYKQQAD6KlfpJEcfSpL6', FALSE);
 
 
 -- Decks
@@ -73,15 +69,13 @@ VALUES
     (1,			'Nomes científicos',	''),
 --  Lucas
     (2,			'Inglês',				'Palavras em inglês.'),
-    (2,			'Tabela periódica',		'Elementos da tabela periódica.'),
---  Matheus
-    (3,			'C++',					'');
+    (2,			'Tabela periódica',		'Elementos da tabela periódica.');
 
 -- Cards
 INSERT INTO `avii_desenvweb`.`card`
     (`user_id`,	`deck_id`,	`front`,			    `back`)
 VALUES
-    -- Felipe
+    -- Administrator
     -- Latim
     (1,			1,			'domus',				'casa'),
     (1,			1,			'familia',				'família'),
@@ -113,7 +107,7 @@ VALUES
     (1,			3,			'laranjeira',			'Citrus × sinensis'),
     (1,			3,			'champignon',			'Agaricus bisporus'),
 
-    -- Lucas
+    -- User
     -- Inglês
     (2,			4,			'house',				'casa'),
     (2,			4,			'family',				'família'),
@@ -128,14 +122,6 @@ VALUES
     (2,			5,			'Li',					'lítio'),
     (2,			5,			'Be',					'berílio'),
     (2,			5,			'B',					'boro'),
-    (2,			5,			'C',					'carbono'),
-
-    -- Matheus
-    -- C++
-    (3,			6,			'função principal',		'int main()'),
-    (3,			6,			'incluir biblioteca',	'#include <...>'),
-    (3,			6,			'biblioteca de E/S',	'iostream'),
-    (3,			6,			'saída',				'std::cout << ...;'),
-    (3,			6,			'entrada',				'std::cin >> ...;');
+    (2,			5,			'C',					'carbono');
 
 COMMIT;
