@@ -106,4 +106,32 @@ class Card extends Model
     {
         $this->easeFactor = $easeFactor;
     }
+
+    public static function findAllByDeck(int $deckId): array
+    {
+        $connection = self::getConnection();
+
+        $statement = $connection->prepare(
+            '
+            SELECT `card_id`, `user_id`, `deck_id`, `front`, `back`, `repetition_count`, `time_interval`, `ease_factor`
+            FROM `card`
+            WHERE `deck_id` = :deckId;
+            '
+        );
+
+        $statement->bindValue(':deckId', $deckId, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        return array_map(
+            fn ($result) => new Card(
+                $result['user_id'], $result['deck_id'],
+                $result['front'], $result['back'],
+                $result['card_id'],
+                $result['repetition_count'], $result['time_interval'], $result['ease_factor']
+            ),
+
+            $statement->fetchAll()
+        );
+    }
 }
