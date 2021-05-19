@@ -131,31 +131,62 @@ class Deck extends Model
         $deck->setId($connection->lastInsertId());
     }
 
-    public static function validate(Deck $deck): array
+    /**
+     * @throws ValidationErrorException
+     */
+    public static function update(Deck $deck): void
+    {
+        $errors = self::validate($deck, true);
+
+        if (!empty($errors))
+            throw new ValidationErrorException(self::class, $errors);
+
+        $connection = self::getConnection();
+
+        $statement = $connection->prepare(
+            '
+            UPDATE `deck`
+            SET `title` = :title, `description` = :description
+            WHERE `deck_id` = :id
+            LIMIT 1;
+            '
+        );
+
+        $statement->bindValue(':title',         $deck->getTitle(),          PDO::PARAM_STR);
+        $statement->bindValue(':description',   $deck->getDescription(),    PDO::PARAM_STR);
+        $statement->bindValue(':id',            $deck->getId(),             PDO::PARAM_INT);
+
+        $statement->execute();
+    }
+
+    public static function validate(Deck $deck, bool $exceptSelf = false): array
     {
         $errors = [];
 
-        if (self::deckExists($deck))
+        if (self::deckExists($deck, $exceptSelf))
             $errors['title'][] = 'You already have a deck with this title.';
 
         return $errors;
     }
 
-    public static function deckExists(Deck $deck): bool
+    public static function deckExists(Deck $deck, bool $exceptSelf = false): bool
     {
         $connection = self::getConnection();
 
+        $except = $exceptSelf ? 'AND `deck_id` != :deckId' : '';
+
         $statement = $connection->prepare(
-            '
+            "
             SELECT `deck_id`
             FROM `deck`
-            WHERE `user_id` = :userId AND `title` = :title
+            WHERE `user_id` = :userId AND `title` = :title $except
             LIMIT 1;
-            '
+            "
         );
 
         $statement->bindValue(':userId',    $deck->getUserId(), PDO::PARAM_INT);
         $statement->bindValue(':title',     $deck->getTitle(),  PDO::PARAM_STR);
+        $statement->bindValue(':deckId',    $deck->getId(),     PDO::PARAM_INT);
 
         $statement->execute();
 

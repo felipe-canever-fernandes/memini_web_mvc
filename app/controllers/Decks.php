@@ -62,4 +62,27 @@ class Decks extends Controller
 
         View::render('decks/edit.twig', ['deck' => $result]);
     }
+
+    public function updateAction(): void
+    {
+        if (!isset($_POST['update']))
+            Router::redirect('/decks');
+
+        $deck = new Deck(
+            Authentication::getSignedInUser()->getId(),
+            $_POST['title'],
+            $_POST['description'],
+            $_POST['id']
+        );
+
+        $parameters = ['deck' => $deck];
+
+        try {
+            Deck::update($deck);
+        } catch (ValidationErrorException $exception) {
+            $parameters['errors'] = $exception->getErrors();
+        }
+
+        View::render('decks/edit.twig', $parameters);
+    }
 }
