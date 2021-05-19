@@ -24,10 +24,45 @@
                         <p class="card-text">{{ deck.getDescription }}</p>
                         <div class="mt-auto d-flex flex-column">
                             <a href="/decks/{{ deck.getId }}/edit" class="btn btn-sm btn-outline-primary m-1">Edit</a>
+                            <button
+                                    type="button"
+                                    class="btn btn-sm btn-outline-danger"
+                                    onclick="displayModal({{ deck.getId }}, '{{ deck.getTitle }}')"
+                                    data-bs-toggle="modal" data-bs-target="#modal"
+                            >
+                                Delete
+                            </button>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Delete Deck</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete deck <strong><span id="deckTitleSpan"></span></strong> and all its
+                    cards?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form method="post" action="decks/delete">
+                        <input type="hidden" id="deckIdInput" name="deckId" value="">
+                        <button type="submit" class="btn btn-danger" name="delete">Delete Deck</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/scripts/decksIndex.js"></script>
 {% endblock %}
