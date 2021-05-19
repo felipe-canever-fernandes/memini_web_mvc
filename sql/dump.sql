@@ -14,16 +14,8 @@ CREATE TABLE `avii_desenvweb`.`user`(
 
     PRIMARY KEY (`user_id`),
     UNIQUE KEY  (`email`)
-);
-
--- Users
-INSERT INTO `avii_desenvweb`.`user` (`name`,	    `email`,                                    `hashed_password`,                                              `is_administrator`)
---                                                                                               060193
-VALUES								("Felipe",		"felipe.canever.fernandes@outlook.com",     "$2y$10$33buAp7lQlCf2AetVfKjeuJ6AR9zf7PtoNqVZKRKuqm.Xi4wPL52K", TRUE),
---                                                                                               081293
-                                    ("Lucas",		"lucas.canever.fernandes@outlook.com",      "$2y$10$tZsYlcu6mGp/SblPIO5KZecgR7axryX/Le8IQv1H98PWIxKA0rCeO", FALSE),
---                                                                                               041200
-                                    ("Matheus",		"matheus.canever.fernandes@outlook.com",    "$2y$10$9JUyCEwUUXksBmLXEDdp9.eSI24scg3aR8nKCspWP0M5KMSs4.BYy", FALSE);
+)
+ENGINE = INNODB;
 
 -- Deck
 CREATE TABLE `avii_desenvweb`.`deck`(
@@ -33,20 +25,35 @@ CREATE TABLE `avii_desenvweb`.`deck`(
     `description`	VARCHAR(255)	NOT NULL	DEFAULT "",
 
     PRIMARY KEY	(`deck_id`),
-    FOREIGN KEY	(`user_id`)	REFERENCES	`avii_desenvweb`.`user`	(`user_id`)
-);
+    FOREIGN KEY	(`user_id`)	REFERENCES	`avii_desenvweb`.`user`	(`user_id`) ON DELETE CASCADE
+)
+ENGINE = INNODB;
+
+-- Users
+INSERT INTO `avii_desenvweb`.`user`
+    (`name`,	    `email`,                                    `hashed_password`,                                              `is_administrator`)
+
+VALUES
+--                                                              060193
+    ("Felipe",		"felipe.canever.fernandes@outlook.com",     "$2y$10$33buAp7lQlCf2AetVfKjeuJ6AR9zf7PtoNqVZKRKuqm.Xi4wPL52K", TRUE),
+--                                                              081293
+    ("Lucas",		"lucas.canever.fernandes@outlook.com",      "$2y$10$tZsYlcu6mGp/SblPIO5KZecgR7axryX/Le8IQv1H98PWIxKA0rCeO", FALSE),
+--                                                              120400
+    ("Matheus",		"matheus.canever.fernandes@outlook.com",    "$2y$10$9JUyCEwUUXksBmLXEDdp9.eSI24scg3aR8nKCspWP0M5KMSs4.BYy", FALSE);
+
 
 -- Decks
 INSERT INTO `avii_desenvweb`.`deck`
-        (`user_id`,	`title`,				`description`)
-        -- Felipe
-VALUES	(1,			"Latim",				"Palavras em latim."),
-        (1,			"Francês",				"Palavras em francês."),
-        (1,			"Nomes científicos",	""),
-        -- Lucas
-        (2,			"Inglês",				"Palavras em inglês."),
-        (2,			"Tabela periódica",		"Elementos da tabela periódica."),
-        -- Matheus
-        (3,			"C++",					"");
+    (`user_id`,	`title`,				`description`)
+VALUES
+--  Felipe
+    (1,			"Latim",				"Palavras em latim."),
+    (1,			"Francês",				"Palavras em francês."),
+    (1,			"Nomes científicos",	""),
+--  Lucas
+    (2,			"Inglês",				"Palavras em inglês."),
+    (2,			"Tabela periódica",		"Elementos da tabela periódica."),
+--  Matheus
+    (3,			"C++",					"");
 
 COMMIT;

@@ -11,6 +11,8 @@
 
     <div class="row">
         <form method="post" action="/decks/update">
+            <!-- ID -->
+            <input type="hidden" name="id" value="{{ deck.getId }}">
             <!-- Title -->
             <div class="mb-3">
                 <input
