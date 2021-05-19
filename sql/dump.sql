@@ -77,4 +77,65 @@ VALUES
 --  Matheus
     (3,			'C++',					'');
 
+-- Cards
+INSERT INTO `avii_desenvweb`.`card`
+    (`user_id`,	`deck_id`,	`front`,			    `back`)
+VALUES
+    -- Felipe
+    -- Latim
+    (1,			1,			'domus',				'casa'),
+    (1,			1,			'familia',				'família'),
+    (1,			1,			'vir',					'homem'),
+    (1,			1,			'fēmina',				'mulher'),
+    (1,			1,			'puer',					'menino'),
+    (1,			1,			'puella',				'menina'),
+    (1,			1,			'īnfāns',				'bebê'),
+    (1,			1,			'canis',				'cachorro'),
+    (1,			1,			'fēlēs',				'gato'),
+    (1,			1,			'avis',					'passarinho'),
+    -- Francês
+    (1,			2,			'maison',				'casa'),
+    (1,			2,			'famille',				'família'),
+    (1,			2,			'homme',				'homem'),
+    (1,			2,			'femme',				'mulher'),
+    (1,			2,			'garçon',				'menino'),
+    (1,			2,			'fille',				'menina'),
+    (1,			2,			'bébé',					'bebê'),
+    (1,			2,			'chien',				'cachorro'),
+    (1,			2,			'chat',					'gato'),
+    -- Nomes científicos
+    (1,			3,			'ser humano',			'Homo sapiens'),
+    (1,			3,			'chimpanzé',			'Pan troglodytes'),
+    (1,			3,			'cachorro',				'Canis familiaris'),
+    (1,			3,			'gato',					'Felis cattus'),
+    (1,			3,			'pardal',				'Passer domesticus'),
+    (1,			3,			'barata',				'Periplaneta americana'),
+    (1,			3,			'laranjeira',			'Citrus × sinensis'),
+    (1,			3,			'champignon',			'Agaricus bisporus'),
+
+    -- Lucas
+    -- Inglês
+    (2,			4,			'house',				'casa'),
+    (2,			4,			'family',				'família'),
+    (2,			4,			'man',					'homem'),
+    (2,			4,			'woman',				'mulher'),
+    (2,			4,			'boy',					'menino'),
+    (2,			4,			'girl',					'menina'),
+    (2,			4,			'baby',					'bebê'),
+    -- Tabela periódica
+    (2,			5,			'H',					'hidrogênio'),
+    (2,			5,			'He',					'hélio'),
+    (2,			5,			'Li',					'lítio'),
+    (2,			5,			'Be',					'berílio'),
+    (2,			5,			'B',					'boro'),
+    (2,			5,			'C',					'carbono'),
+
+    -- Matheus
+    -- C++
+    (3,			6,			'função principal',		'int main()'),
+    (3,			6,			'incluir biblioteca',	'#include <...>'),
+    (3,			6,			'biblioteca de E/S',	'iostream'),
+    (3,			6,			'saída',				'std::cout << ...;'),
+    (3,			6,			'entrada',				'std::cin >> ...;');
+
 COMMIT;
